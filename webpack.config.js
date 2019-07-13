@@ -1,6 +1,6 @@
 module.exports = {
     entry: [
-        '.frontEnd/client/src/index.js',
+        './frontEnd/client/src/index.js',
     ],
     module: {
         rules: [
@@ -11,7 +11,6 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
                 use: [{
                     loader: 'style-loader',
                 }, {
@@ -29,7 +28,7 @@ module.exports = {
         extensions: ['*', '.js', '.jsx'],
     },
     output: {
-        path: `${__dirname}/client/dist`,
+        path: `${__dirname}/frontEnd/client/dist`,
         publicPath: '/',
         filename: 'bundle.js',
     },

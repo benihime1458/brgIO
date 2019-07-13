@@ -1,16 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
+import {render} from 'react-dom';
+import App from './Components/App';
 
-function App() {
-    return (    
-    <Button variant="contained" color="primary">
-        Simple Material-UI Working!
-    </Button>
-    );
-}
-
-ReactDOM.render(
-    <App />,
-    document.getElementById('app')
-);
+render(<App />,document.getElementById('app'));

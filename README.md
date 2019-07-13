@@ -1,6 +1,6 @@
-# brg.io
+# brg-exercises.io
 
-## Bridges portfolio site built using MERN...
+## App built using MERN...
 
 - npm for package management
 - Express.js for server stuff
