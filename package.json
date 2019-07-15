@@ -21,9 +21,11 @@
     "webpack-cli": "^3.3.5"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "@material-ui/styles": "^4.2.0",
     "axios": "^0.19.0",
+    "clsx": "^1.0.4",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
