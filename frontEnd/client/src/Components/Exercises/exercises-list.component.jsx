@@ -23,7 +23,7 @@ export default class ExercisesList extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://brg-exercises.web.app/exercises/')
+    axios.get('https://brg-exercises.firebaseapp.com/exercises/')
       .then(response => {
         this.setState({ exercises: response.data });
       })
@@ -33,7 +33,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('https://brg-exercises.web.app/exercises/' + id)
+    axios.delete('https://brg-exercises.firebaseapp.com/exercises/' + id)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)

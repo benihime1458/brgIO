@@ -23,7 +23,7 @@ export default class EditExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://brg-exercises.web.app/exercises/' + this.props.match.params.id)
+    axios.get('https://brg-exercises.firebaseapp.com/exercises/' + this.props.match.params.id)
       .then(response => {
         this.setState({
           username: response.data.username,
@@ -36,7 +36,7 @@ export default class EditExercise extends Component {
         console.log(error);
       })
 
-    axios.get('https://brg-exercises.web.app/users/')
+    axios.get('https://brg-exercises.firebaseapp.com/users/')
       .then(response => {
         this.setState({ users: response.data.map(user => user.username) });
       })
@@ -81,7 +81,7 @@ export default class EditExercise extends Component {
 
     console.log(exercise);
 
-    axios.post('https://brg-exercises.web.app/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('https://brg-exercises.firebaseapp.com/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data));
 
     window.location = '/';
