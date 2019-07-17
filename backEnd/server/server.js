@@ -9,7 +9,9 @@ require('dotenv').config();
 const uri = 'mongodb+srv://benihime1458:benihime1458@exercises-tf92l.azure.mongodb.net/test?retryWrites=true&w=majority';
 const port = process.env.PORT || 5635;
 
+//cors
 app.use(cors());
+
 app.use(express.json());
 
 app.use((req, res, next) => {

@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {Button} from '@material-ui/core';
 
 const Exercise = props => (
   <tr>
@@ -23,7 +22,7 @@ export default class ExercisesList extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://brg-exercises.firebaseapp.com/exercises/')
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/')
       .then(response => {
         this.setState({ exercises: response.data });
       })
@@ -33,7 +32,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('https://brg-exercises.firebaseapp.com/exercises/' + id)
+    axios.delete('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/' + id)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -47,8 +46,9 @@ export default class ExercisesList extends Component {
   }
 
   render() {
+    console.log(`yep ${this.state.exercises}`)
     return (
-      <div>
+      <Fragment>
         <h3>Logged Exercises</h3>
         <table className="table">
           <thead className="thead-light">
@@ -64,7 +64,7 @@ export default class ExercisesList extends Component {
             {this.exerciseList()}
           </tbody>
         </table>
-      </div>
+      </Fragment>
     )
   }
 }

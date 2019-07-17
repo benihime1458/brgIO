@@ -1,0 +1,14 @@
+version: '2.1'
+
+services:
+  BRGIO:
+    image: brgio
+    depends_on:
+      - 'database'
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 5635:5635
+  database:
+    image: mongo:latest

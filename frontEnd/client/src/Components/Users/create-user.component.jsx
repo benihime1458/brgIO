@@ -23,7 +23,7 @@ export default class CreateUser extends Component {
     };
     console.log(newUser);
     
-    axios.post('https://brg-exercises.firebaseapp.com/users/add', newUser)
+    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/add', newUser)
       .then(res => console.log(res.data));
     
       this.setState({

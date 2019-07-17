@@ -23,7 +23,7 @@ export default class CreateExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://brg-exercises.firebaseapp.com/users/')
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -73,7 +73,7 @@ export default class CreateExercise extends Component {
 
     console.log(exercise);
     
-    axios.post('https://brg-exercises.firebaseapp.com/exercises/add', exercise)
+    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/add', exercise)
       .then(res => console.log(res.data));
     
       window.location = '/';
