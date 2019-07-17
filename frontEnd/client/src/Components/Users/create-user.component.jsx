@@ -23,7 +23,7 @@ export default class CreateUser extends Component {
     };
     console.log(newUser);
     
-    axios.post('https://brg-exercises.firebaseapp.com/users/add', newUser)
+    axios.post('https://brg-ex-io.web.app/users/add', newUser)
       .then(res => console.log(res.data));
     
       this.setState({
