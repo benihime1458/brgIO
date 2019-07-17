@@ -17,8 +17,8 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.0.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "webpack": "latest",
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
     "@material-ui/core": "latest",
@@ -30,10 +30,10 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.6.4",
-    "react": "^16.8.6",
+    "react": "latest",
     "react-datepicker": "^2.8.0",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1"
+    "react-dom": "latest",
+    "react-router-dom": "latest"
   },
   "babel": {
     "presets": [

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -23,7 +23,7 @@ export default class EditExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://brgex-io.web.app/exercises/' + this.props.match.params.id)
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/' + this.props.match.params.id)
       .then(response => {
         this.setState({
           username: response.data.username,
@@ -36,7 +36,7 @@ export default class EditExercise extends Component {
         console.log(error);
       })
 
-    axios.get('https://brgex-io.web.app/users/')
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/')
       .then(response => {
         this.setState({ users: response.data.map(user => user.username) });
       })
@@ -81,7 +81,7 @@ export default class EditExercise extends Component {
 
     console.log(exercise);
 
-    axios.post('https://brgex-io.web.app/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data));
 
     window.location = '/';
