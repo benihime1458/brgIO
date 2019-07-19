@@ -3,20 +3,23 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import clsx from 'clsx';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
+import { Drawer, 
+         AppBar, 
+         Toolbar, 
+         List, 
+         CssBaseline, 
+         Typography, 
+         Divider, 
+         IconButton, 
+         ListItem, 
+         ListItemIcon, 
+         ListItemText  
+        } from '@material-ui/core';
+
+// icons
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
@@ -155,7 +158,7 @@ export default props => {
         <List>
           <Link to="/" style={linkStyle}>
             <ListItem button>
-              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemIcon><InboxIcon /></ListItemIcon>
               <ListItemText primary='Exercise Log' />
             </ListItem>
           </Link>
