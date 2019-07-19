@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node backEnd/server/server.js",
+    "develop": "nodemon backEnd/server/server.js",
     "build": "webpack -d --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
