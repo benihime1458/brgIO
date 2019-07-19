@@ -1,5 +1,30 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
+import clsx from 'clsx';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Button, InputLabel, InputAdornment, Input, FormControl} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -16,6 +41,7 @@ export default class CreateUser extends Component {
       username: e.target.value
     });
   }
+
   onSubmit(e) {
     e.preventDefault();
     const newUser = {
@@ -23,7 +49,7 @@ export default class CreateUser extends Component {
     };
     console.log(newUser);
     
-    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/add', newUser)
+    axios.post('http://localhost:5635/users/add', newUser)
       .then(res => console.log(res.data));
     
       this.setState({
@@ -32,23 +58,29 @@ export default class CreateUser extends Component {
   }
   render() {
     return (
-      <div>
-        <h3>Create New User</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Username: </label>
-            <input type="text"
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}
-            />
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Create User" className="btn btn-primary" />
-          </div>
-        </form>
-      </div>
+      <Fragment>
+        <Typography variant='h4' gutterBottom>Create New User</Typography>
+          <form onSubmit={this.onSubmit}>
+            <FormControl variant="standard">
+              <InputLabel>Desired Username:</InputLabel>
+              <Input
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountCircle color="primary" />
+                  </InputAdornment>
+                }
+                required
+                value={this.state.username}
+                onChange={this.onChangeUsername}       
+              />
+              <br></br>
+            </FormControl>
+            <div className="form-group">
+              <Button variant="contained" type="submit" color="primary">Create User</Button>
+            </div>
+          </form>
+      </Fragment>
     )
   }
 }

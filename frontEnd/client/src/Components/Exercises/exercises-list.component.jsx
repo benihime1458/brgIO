@@ -1,28 +1,52 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { 
+  Table, TableBody, TableCell, TableHead, 
+  TableRow, Paper, Typography, 
+} from '@material-ui/core';
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: "#3F51B5",
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+}))(TableRow);
+
 const Exercise = props => (
-  <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0, 10)}</td>
-    <td>
+  <StyledTableRow>
+    <StyledTableCell>{props.exercise.username}</StyledTableCell>
+    <StyledTableCell>{props.exercise.description}</StyledTableCell>
+    <StyledTableCell>{props.exercise.duration}</StyledTableCell>
+    <StyledTableCell>{props.exercise.date.substring(0, 10)}</StyledTableCell>
+    <StyledTableCell>
       <Link to={"/edit/" + props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-    </td>
-  </tr>
+    </StyledTableCell>
+  </StyledTableRow>
 )
 
 export default class ExercisesList extends Component {
   constructor(props) {
     super(props);
     this.deleteExercise = this.deleteExercise.bind(this);
-    this.state = { exercises: [] };
+    this.state = { exercises: [], };
   }
 
   componentDidMount() {
-    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/')
+    axios.get('http://localhost:5635/exercises/')
       .then(response => {
         this.setState({ exercises: response.data });
       })
@@ -32,7 +56,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/' + id)
+    axios.delete('http://localhost:5635/exercises/' + id)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -46,24 +70,23 @@ export default class ExercisesList extends Component {
   }
 
   render() {
-    console.log(`yep ${this.state.exercises}`)
     return (
       <Fragment>
-        <h3>Logged Exercises</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Username</th>
-              <th>Description</th>
-              <th>Duration</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.exerciseList()}
-          </tbody>
-        </table>
+        <Typography variant='h4' gutterBottom>Exercise Log</Typography>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Username</StyledTableCell>
+                <StyledTableCell>Description</StyledTableCell>
+                <StyledTableCell>Duration</StyledTableCell>
+                <StyledTableCell>Date</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+                {this.exerciseList()}
+            </TableBody>
+          </Table>
       </Fragment>
     )
   }
