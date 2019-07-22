@@ -1,30 +1,9 @@
 import React, { Fragment, Component } from 'react';
-import clsx from 'clsx';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button, InputLabel, InputAdornment, Input, FormControl} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
+
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -49,7 +28,7 @@ export default class CreateUser extends Component {
     };
     console.log(newUser);
     
-    axios.post('http://localhost:5635/users/add', newUser)
+    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/add', newUser)
       .then(res => console.log(res.data));
     
       this.setState({
@@ -65,6 +44,7 @@ export default class CreateUser extends Component {
               <InputLabel>Desired Username:</InputLabel>
               <Input
                 id="input-with-icon-adornment"
+                autoComplete="off"
                 startAdornment={
                   <InputAdornment position="start">
                     <AccountCircle color="primary" />

@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { 
   Table, TableBody, TableCell, TableHead, 
   TableRow, Paper, Typography, 
@@ -46,7 +46,7 @@ export default class ExercisesList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5635/exercises/')
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/')
       .then(response => {
         this.setState({ exercises: response.data });
       })
@@ -56,7 +56,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('http://localhost:5635/exercises/' + id)
+    axios.delete('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/' + id)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -73,6 +73,7 @@ export default class ExercisesList extends Component {
     return (
       <Fragment>
         <Typography variant='h4' gutterBottom>Exercise Log</Typography>
+        <Paper>
           <Table>
             <TableHead>
               <TableRow>
@@ -87,6 +88,7 @@ export default class ExercisesList extends Component {
                 {this.exerciseList()}
             </TableBody>
           </Table>
+        </Paper>
       </Fragment>
     )
   }

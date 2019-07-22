@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
+// material-ui 
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, Paper, Select, MenuItem, TextField, Box } from '@material-ui/core';
 
 export default class CreateExercise extends Component {
   constructor(props) {
@@ -23,7 +27,7 @@ export default class CreateExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5635/users/')
+    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -73,7 +77,7 @@ export default class CreateExercise extends Component {
 
     console.log(exercise);
     
-    axios.post('http://localhost:5635/exercises/add', exercise)
+    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/add', exercise)
       .then(res => console.log(res.data));
     
       window.location = '/';
@@ -81,59 +85,76 @@ export default class CreateExercise extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Exercise Log</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Username: </label>
-            <select ref="userInput"
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
-              {
-                this.state.users.map(function (user) {
-                  return <option
-                    key={user}
-                    value={user}>{user}
-                  </option>;
-                })
-              }
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Description: </label>
-            <input type="text"
-              required
-              className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
-            />
-          </div>
-          <div className="form-group">
-            <label>Duration (in minutes): </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
-            />
-          </div>
-          <div className="form-group">
-            <label>Date: </label>
+      <Fragment>
+        <Typography variant="h4" gutterBottom>Create New Exercise Log</Typography>
+        <Box width="50%">
+          <Paper>
+            <form onSubmit={this.onSubmit}>
+              <div>
+                <FormControl variant="standard">
+                  <InputLabel>Username: </InputLabel>
+                  <Select ref="userInput"
+                    required
+                    value={this.state.username}
+                    onChange={this.onChangeUsername}>
+                    {
+                      this.state.users.map(function (user) {
+                        return <MenuItem
+                          key={user}
+                          value={user}>{user}
+                        </MenuItem>;
+                      })
+                    }
+                  </Select>
+                  <br></br>
+                </FormControl>
+              </div>
+              <div>
+                <FormControl variant="standard">
+                  <InputLabel>Description: </InputLabel>
+                  <Input 
+                    type="text"
+                    required
+                    value={this.state.description}
+                    onChange={this.onChangeDescription}
+                  />
+                <br></br>
+                </FormControl>
+              </div>
+              <div>
+                <FormControl variant="standard">
+                  <InputLabel>Duration: </InputLabel>
+                  <Input
+                    type="number"
+                    variant="outlined"
+                    endAdornment={<InputAdornment position="end">min</InputAdornment>}
+                    required
+                    value={this.state.duration}
+                    onChange={this.onChangeDuration}
+                  />
+                  <br></br>
+                </FormControl>
+              </div>
             <div>
-              <DatePicker
-                selected={this.state.date}
-                onChange={this.onChangeDate}
-              />
+                <FormControl variant="standard">
+                  <InputLabel>Date: </InputLabel>
+                    <br></br>
+                    <DatePicker
+                      selected={this.state.date}
+                      onChange={this.onChangeDate}
+                    />
+                    <br></br>
+                </FormControl>
             </div>
-          </div>
-
-          <div className="form-group">
-            <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
-          </div>
-        </form>
-      </div>
+            <div>
+              <FormControl variant="standard">
+                <Button type="submit" color="primary" variant="contained">Create Exercise Log</Button>
+              </FormControl>
+            </div>
+            </form>
+          </Paper>
+        </Box>
+      </Fragment>
     )
   }
 }
