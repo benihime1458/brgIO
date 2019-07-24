@@ -4,8 +4,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 // material-ui 
-import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, Paper, Select, MenuItem, TextField, Box } from '@material-ui/core';
+// import { DatePicker } from "@material-ui/pickers";
 
 export default class CreateExercise extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class CreateExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/users/')
+    axios.get('http://localhost:5635/users/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -77,7 +77,7 @@ export default class CreateExercise extends Component {
 
     console.log(exercise);
     
-    axios.post('http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635/exercises/add', exercise)
+    axios.post('http://localhost:5635/exercises/add', exercise)
       .then(res => console.log(res.data));
     
       window.location = '/';
@@ -87,7 +87,7 @@ export default class CreateExercise extends Component {
     return (
       <Fragment>
         <Typography variant="h4" gutterBottom>Create New Exercise Log</Typography>
-        <Box width="50%">
+        <Box justifyContent="center">
           <Paper>
             <form onSubmit={this.onSubmit}>
               <div>
@@ -115,6 +115,7 @@ export default class CreateExercise extends Component {
                   <Input 
                     type="text"
                     required
+                    multiline
                     value={this.state.description}
                     onChange={this.onChangeDescription}
                   />
@@ -137,11 +138,12 @@ export default class CreateExercise extends Component {
               </div>
             <div>
                 <FormControl variant="standard">
-                  <InputLabel>Date: </InputLabel>
                     <br></br>
                     <DatePicker
+                      label="Date: "
                       selected={this.state.date}
                       onChange={this.onChangeDate}
+                      showTodayButton
                     />
                     <br></br>
                 </FormControl>

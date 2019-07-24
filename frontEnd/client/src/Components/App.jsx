@@ -1,17 +1,24 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+//material-ui pickers
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
+
+
 import { Body } from './Layout';
 
 export default class extends Component {
 
   render() {
     return (
-      <Router>
-        <div className="container">
-          <Body />
-        </div>
-      </Router>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Router>
+          <div className="container">
+            <Body />
+          </div>
+        </Router>
+      </MuiPickersUtilsProvider>
     );
   }
 }
