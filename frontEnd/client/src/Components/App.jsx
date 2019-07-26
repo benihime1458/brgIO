@@ -6,7 +6,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
 
-import { Body } from './Layout';
+import { Header, Body } from './Layout';
 
 export default class extends Component {
 
@@ -15,6 +15,7 @@ export default class extends Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <div className="container">
+            <Header />
             <Body />
           </div>
         </Router>
