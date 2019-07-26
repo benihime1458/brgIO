@@ -1,11 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 
 // material-ui 
-import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, Paper, Select, MenuItem, TextField, Box } from '@material-ui/core';
-// import { DatePicker } from "@material-ui/pickers";
+import { Typography, Button, InputAdornment, Paper, MenuItem, TextField } from '@material-ui/core';
+import { DatePicker } from "@material-ui/pickers";
 
 export default class CreateExercise extends Component {
   constructor(props) {
@@ -80,82 +78,76 @@ export default class CreateExercise extends Component {
     axios.post('http://localhost:5635/exercises/add', exercise)
       .then(res => console.log(res.data));
     
-      window.location = '/';
+      // window.location = '/';
   }
 
   render() {
     return (
       <Fragment>
-        <Typography variant="h4" gutterBottom>Create New Exercise Log</Typography>
-        <Box justifyContent="center">
-          <Paper>
+        <Typography variant="h4" gutterBottom>
+          Create New Exercise Log
+        </Typography>
+        <div style={{ width: '100%' }} >
+          <Paper >
             <form onSubmit={this.onSubmit}>
-              <div>
-                <FormControl variant="standard">
-                  <InputLabel>Username: </InputLabel>
-                  <Select ref="userInput"
-                    required
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}>
-                    {
-                      this.state.users.map(function (user) {
-                        return <MenuItem
-                          key={user}
-                          value={user}>{user}
-                        </MenuItem>;
-                      })
-                    }
-                  </Select>
-                  <br></br>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl variant="standard">
-                  <InputLabel>Description: </InputLabel>
-                  <Input 
-                    type="text"
-                    required
-                    multiline
-                    value={this.state.description}
-                    onChange={this.onChangeDescription}
-                  />
-                <br></br>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl variant="standard">
-                  <InputLabel>Duration: </InputLabel>
-                  <Input
-                    type="number"
-                    variant="outlined"
-                    endAdornment={<InputAdornment position="end">min</InputAdornment>}
-                    required
-                    value={this.state.duration}
-                    onChange={this.onChangeDuration}
-                  />
-                  <br></br>
-                </FormControl>
-              </div>
-            <div>
-                <FormControl variant="standard">
-                    <br></br>
-                    <DatePicker
-                      label="Date: "
-                      selected={this.state.date}
-                      onChange={this.onChangeDate}
-                      showTodayButton
-                    />
-                    <br></br>
-                </FormControl>
-            </div>
-            <div>
-              <FormControl variant="standard">
-                <Button type="submit" color="primary" variant="contained">Create Exercise Log</Button>
-              </FormControl>
-            </div>
+              <TextField 
+                label="Username:"
+                select
+                required
+                margin="normal"
+                value={this.state.username}
+                onChange={this.onChangeUsername}>
+                {
+                  this.state.users.map(function (user) {
+                    return <MenuItem
+                      key={user}
+                      value={user}>{user}
+                    </MenuItem>;
+                  })
+                }
+              </TextField>
+              <br/>
+              <TextField
+                label="Description: "
+                type="text"
+                required
+                multiline
+                margin="normal"
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+              />
+              <br/>
+              <TextField
+                required
+                label="Duration: "
+                type="number"
+                margin="normal"
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">Min</InputAdornment>,
+                }}
+                value={this.state.duration}
+                onChange={this.onChangeDuration}
+              />
+              <br/>
+              <DatePicker
+                label="Date: "
+                format="MM/dd/yyyy"
+                margin="normal"
+                value={this.state.date}
+                onChange={this.onChangeDate}
+                showTodayButton
+              />
+              <br/>
+              <Button 
+                type="submit" 
+                color="primary" 
+                variant="contained"
+              >
+                Create Exercise Log
+              </Button>
             </form>
           </Paper>
-        </Box>
+        </div>
       </Fragment>
     )
   }
