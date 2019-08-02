@@ -27,7 +27,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 // Dialog Components
-// import LogExercise from '../Exercises/Dialogs/LogExercise';
+import LogExercise from '../Exercises/Dialogs/LogExercise';
 
 const drawerWidth = 240;
 
@@ -131,10 +131,10 @@ export default props => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brg-exercises.io</Link>
           </Typography>
-          {/* <LogExercise /> */}
+          <LogExercise />
         </Toolbar>
       </AppBar>
       <Drawer
