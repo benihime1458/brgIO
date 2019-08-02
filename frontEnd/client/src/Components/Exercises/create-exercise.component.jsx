@@ -76,9 +76,16 @@ export default class CreateExercise extends Component {
     console.log(exercise);
     
     axios.post('http://localhost:5635/exercises/add', exercise)
-      .then(res => console.log(res.data));
+      .then(res => console.log(res.data))
     
-      // window.location = '/';
+    axios.get('http://localhost:5635/exercises/')
+    .then(response => {
+      this.setState({ exercises: response.data });
+      window.location = '/';
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   render() {
@@ -88,7 +95,6 @@ export default class CreateExercise extends Component {
           Create New Exercise Log
         </Typography>
         <div style={{ width: '100%' }} >
-          <Paper >
             <form onSubmit={this.onSubmit}>
               <TextField 
                 label="Username:"
@@ -112,6 +118,8 @@ export default class CreateExercise extends Component {
                 type="text"
                 required
                 multiline
+                rows="4"
+                fullWidth
                 margin="normal"
                 value={this.state.description}
                 onChange={this.onChangeDescription}
@@ -146,7 +154,6 @@ export default class CreateExercise extends Component {
                 Create Exercise Log
               </Button>
             </form>
-          </Paper>
         </div>
       </Fragment>
     )

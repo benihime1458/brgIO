@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Fab } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
+import CreateExercise from "../create-exercise.component";
 
 export default class AddExercise extends React.Component {
   state = {
@@ -37,26 +38,7 @@ export default class AddExercise extends React.Component {
             Add {this.props.group} Exercise
           </DialogTitle>
           <DialogContent>
-            <form>
-              <TextField
-                required
-                autoFocus
-                margin='dense'
-                id='name'
-                label='Title'
-                type='text'
-                fullWidth
-              />
-              <TextField
-                margin='dense'
-                id='name'
-                label='Description'
-                type='text'
-                fullWidth
-                multiline
-                rows='4'
-              />
-            </form>
+            <CreateExercise/>
           </DialogContent>
           <DialogActions>
             <Button
