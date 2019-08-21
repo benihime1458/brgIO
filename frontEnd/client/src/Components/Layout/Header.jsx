@@ -164,12 +164,6 @@ export default props => {
               <ListItemText primary='Exercise Log' />
             </ListItem>
           </Link>
-          <Link to="/create" style={linkStyle} >
-            <ListItem button>
-              <ListItemIcon><MailIcon /></ListItemIcon>
-              <ListItemText primary='Create Exercise' />
-            </ListItem>
-          </Link>
         </List>
         <Divider />
         <List>

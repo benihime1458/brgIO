@@ -45,7 +45,7 @@ export default class AddExercise extends React.Component {
               onClick={this.handleClose}
               color='primary'
             >
-              Create
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>
