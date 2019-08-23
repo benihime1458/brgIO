@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Typography, Button, InputLabel, InputAdornment, Input, FormControl} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class CreateUser extends Component {
     };
     console.log(newUser);
     
-    axios.post('http://localhost:5635/users/add', newUser)
+    axios.post(`${hosts}/users/add`, newUser)
       .then(res => console.log(res.data));
     
       this.setState({

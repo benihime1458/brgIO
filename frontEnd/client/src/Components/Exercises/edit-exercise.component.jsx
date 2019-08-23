@@ -3,6 +3,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635/';
+
 export default class EditExercise extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,7 @@ export default class EditExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5635/exercises/' + this.props.match.params.id)
+    axios.get(`${hosts}/exercises/'` + this.props.match.params.id)
       .then(response => {
         this.setState({
           username: response.data.username,

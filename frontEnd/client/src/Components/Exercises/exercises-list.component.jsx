@@ -8,6 +8,8 @@ import {
   TableRow, Paper, Typography, 
 } from '@material-ui/core';
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
+
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: "#3F51B5",
@@ -46,7 +48,7 @@ export default class ExercisesList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5635/exercises/')
+    axios.get(`${hosts}/exercises`)
       .then(response => {
         this.setState({ exercises: response.data });
       })
@@ -56,7 +58,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('http://localhost:5635/exercises/' + id)
+    axios.delete(`${hosts}/exercises/' + ${id}`)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)

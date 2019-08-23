@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Typography, Button, InputAdornment, Paper, MenuItem, TextField } from '@material-ui/core';
 import { DatePicker } from "@material-ui/pickers";
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
+
 export default class CreateExercise extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ export default class CreateExercise extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5635/users/')
+    axios.get(`${hosts}/users/`)
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -75,10 +77,10 @@ export default class CreateExercise extends Component {
 
     console.log(exercise);
     
-    axios.post('http://localhost:5635/exercises/add', exercise)
+    axios.post(`${hosts}/exercises/add`, exercise)
       .then(res => console.log(res.data))
     
-    axios.get('http://localhost:5635/exercises/')
+    axios.get(`${hosts}/exercises/`)
     .then(response => {
       this.setState({ exercises: response.data });
       window.location = '/';
