@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth0 } from '../../react-auth0-wrapper'; 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import clsx from 'clsx';
 
@@ -8,6 +9,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Drawer,
   AppBar,
+  Button,
   Toolbar,
   List,
   CssBaseline,
@@ -97,10 +99,40 @@ const useStyles = makeStyles((theme => ({
   },
 })));
 
+  // const NavBar = props => {
+  //   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  //   return (
+  //     <div>
+  //       {!isAuthenticated && (
+  //         <Button
+  //           onClick={() =>
+  //             loginWithRedirect({})
+  //           }
+  //         >
+  //           Log in
+  //       </Button>
+  //       )}
+
+  //       {isAuthenticated && <Button onClick={() => logout()}>Log out</Button>}
+
+  //       {isAuthenticated && (
+  //         <span>
+  //           <Link to="/">Home</Link>&nbsp;
+  //       <Link to="/profile">Profile</Link>
+  //         </span>
+  //       )}
+  //     </div>
+  //   );
+  // };
+
+
 export default props => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -134,6 +166,26 @@ export default props => {
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brg-exercises.io</Link>
           </Typography>
+          <div>
+            {!isAuthenticated && (
+              <Button
+                onClick={() =>
+                  loginWithRedirect({})
+                }
+              >
+                Log in
+        </Button>
+            )}
+
+            {isAuthenticated && <Button onClick={() => logout()}>Log out</Button>}
+
+            {isAuthenticated && (
+              <span>
+                <Link to="/">Home</Link>&nbsp;
+        <Link to="/profile">Profile</Link>
+              </span>
+            )}
+          </div>
           <LogExercise />
         </Toolbar>
       </AppBar>
