@@ -15,8 +15,8 @@ export default class extends Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <div className="container">
-            <Header />
-            <Body />
+              <Header />
+              <Body />
           </div>
         </Router>
       </MuiPickersUtilsProvider>
