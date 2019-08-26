@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { withAuth } from '@okta/okta-react';
 import clsx from 'clsx';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+// okta
+import { withAuth } from '@okta/okta-react';
+import { useAuth } from '../../auth';
 
 // material-ui core
 import {
@@ -17,7 +20,8 @@ import {
   IconButton,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Button
 } from '@material-ui/core';
 
 // material-ui icons
@@ -98,7 +102,10 @@ const useStyles = makeStyles((theme => ({
   },
 })));
 
-export default props => {
+const Header = withAuth(({ auth }) => {
+  const [authenticated, user] = useAuth(auth);
+  console.log('authenticated? ', authenticated)
+  console.log('user? ', user)
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -135,6 +142,17 @@ export default props => {
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brg-exercises.io</Link>
           </Typography>
+          {
+
+           authenticated !== null && (
+         <Button
+            onClick={() => authenticated ? auth.logout() : auth.login()}
+            className="App-link"
+          >
+            Log {authenticated ? 'out' : 'in'}
+          </Button>
+    )
+        }
           <LogExercise />
         </Toolbar>
       </AppBar>
@@ -178,4 +196,6 @@ export default props => {
       </Drawer>
     </div>
   );
-}
+})
+
+export default Header;
