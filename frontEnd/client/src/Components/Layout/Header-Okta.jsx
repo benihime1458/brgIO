@@ -7,6 +7,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 // okta
 import { withAuth } from '@okta/okta-react';
 import { useAuth } from '../../auth';
+import LoginButton from '../Users/LoginButton';
 
 // material-ui core
 import {
@@ -142,18 +143,8 @@ const Header = withAuth(({ auth }) => {
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brg-exercises.io</Link>
           </Typography>
-          {
-
-           authenticated !== null && (
-         <Button
-            onClick={() => authenticated ? auth.logout() : auth.login()}
-            className="App-link"
-          >
-            Log {authenticated ? 'out' : 'in'}
-          </Button>
-    )
-        }
           <LogExercise />
+          <LoginButton />
         </Toolbar>
       </AppBar>
       <Drawer
