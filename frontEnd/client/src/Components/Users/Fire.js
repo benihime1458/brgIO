@@ -2,13 +2,13 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA2S38idHcwIjDpQyuu59YkMDbQPGb02EE",
-  authDomain: "brgio-auth.firebaseapp.com",
-  databaseURL: "https://brgio-auth.firebaseio.com",
-  projectId: "brgio-auth",
+  apiKey: `AIzaSyA2S38idHcwIjDpQyuu59YkMDbQPGb02EE`,
+  authDomain: process.env.FIREBASEAUTHDOMAIN,
+  databaseURL: process.env.FIREBASEDATABASEURL,
+  projectId: process.env.FIREBASEPROJECTID,
   storageBucket: "",
-  messagingSenderId: "58725252911",
-  appId: "1:58725252911:web:c4d710de72ef8a96"
+  messagingSenderId: process.env.FIREBASEMESSAGE,
+  appId: process.env.FIREBASEAPPID
 };
 
 const fire = firebase.initializeApp(firebaseConfig);
