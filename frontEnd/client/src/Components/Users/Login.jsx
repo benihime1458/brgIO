@@ -1,58 +1,56 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import fire from './Fire';
+import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, TextField } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(this);
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
+const useStyles = makeStyles((theme => ({
+  root: {
+    display: 'flex',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(14),
+  },
+})));
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+export default props => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  login(e) {
+  const changeEmail = (e) => setEmail(e.target.value);
+  const changePassword = (e) => setPassword(e.target.value);
+
+  const login = e => {
     e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+    fire.auth().signInWithEmailAndPassword(email, password).then((u) => {
     }).catch((error) => {
       console.log(error);
     });
   }
 
-  signup(e) {
+  const signup = e => {
     e.preventDefault();
-    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+    fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
     }).then((u) => { console.log(u) })
       .catch((error) => {
         console.log(error);
       })
   }
-  render() {
-    return (
-      <div>
-        <form>
-          <div>
-            <label>Email address</label>
-            <input value={this.state.email} onChange={this.handleChange} type="email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-            <small id="emailHelp" >We'll never share your email with anyone else.</small>
-          </div>
-          <div>
-            <label>Password</label>
-            <input value={this.state.password} onChange={this.handleChange} type="password" name="password" id="exampleInputPassword1" placeholder="Password" />
-          </div>
-          <button type="submit" onClick={this.login}>Login</button>
-          <button onClick={this.signup} style={{ marginLeft: '25px' }}>Signup</button>
-        </form>
 
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.content}>
+        <form>
+          <FormControl variant="standard">
+            <TextField label="Email: " type="email" value={email} onChange={changeEmail} />
+            <TextField label="Password: " type="password" value={password} onChange={changePassword} />
+            <Button type="submit" onClick={login}>Login</Button>
+            <Button onClick={signup}>Signup</Button>
+          </FormControl>
+        </form>
       </div>
-    );
-  }
-}
-export default Login;
+    </div>
+  );
+};
