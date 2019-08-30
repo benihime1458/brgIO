@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
-import { Header, Body } from './Layout';
+import { Navbar, Body } from './Layout';
 import { fire, Login } from './Users';
 
 export default class extends Component {
@@ -24,7 +24,7 @@ export default class extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user.email);
+      user ? console.log(user.email) : null;
       if (user) {
         this.setState({ user });
         localStorage.setItem('user', user.uid);
@@ -40,8 +40,9 @@ export default class extends Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
           <div className="container">
+            <Navbar user={this.state.user} />
             {this.state.user ? 
-            (<div><Header /><Body /></div>) 
+            (<Body />) 
             : (<Login />)}
           </div>
         </Router>

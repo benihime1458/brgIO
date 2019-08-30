@@ -28,7 +28,7 @@ export default props => {
     <div className={classes.root}>
       <main className={classes.content}>
         <Typography paragraph>
-          
+          PARAGRAPH IN DA BODY
         </Typography>
         <Route path="/" exact component={ExercisesList} />
         <Route path="/edit/:id" component={EditExercise} />
