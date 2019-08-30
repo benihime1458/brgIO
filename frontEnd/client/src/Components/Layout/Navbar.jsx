@@ -29,6 +29,9 @@ import MailIcon from '@material-ui/icons/Mail';
 // Dialog Components
 import LogExercise from '../Exercises/Dialogs/LogExercise';
 
+// Logout
+import Logout from '../Users/Logout';
+
 const drawerWidth = 240;
 
 const linkStyle = {
@@ -132,9 +135,12 @@ export default props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brg-exercises.io</Link>
+            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brgio</Link>
           </Typography>
           <LogExercise />
+
+          {props.user ? <Logout /> : null}
+          
         </Toolbar>
       </AppBar>
       <Drawer
