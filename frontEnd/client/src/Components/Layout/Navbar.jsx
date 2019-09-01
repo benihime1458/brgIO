@@ -123,26 +123,36 @@ export default props => {
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
+          {props.user ? 
+            <IconButton
+              color="inherit"
+              aria-label="Open awer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: open,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+          :
+          null
+          }
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brgio</Link>
           </Typography>
-          <LogExercise />
 
-          {props.user ? <Logout /> : null}
+
+          {props.user ? 
+            <div>
+              <LogExercise />
+              <Logout /> 
+            </div>
+            : null}
           
         </Toolbar>
       </AppBar>
+      {props.user ?
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -181,6 +191,9 @@ export default props => {
           </Link>
         </List>
       </Drawer>
+      : null 
+      }
     </div>
   );
 }
+ 
