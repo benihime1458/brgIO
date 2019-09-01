@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 //material-ui pickers
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
-import { Navbar, Body } from './Layout';
-import { fire, Login } from './Users';
+import { Navbar, Dashboard } from './Layout';
+import { fire } from './Users';
 
 export default class extends Component {
 
@@ -24,15 +24,15 @@ export default class extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      user ? console.log(user.email) : null;
       if (user) {
+        console.log(user.email)
         this.setState({ user });
         localStorage.setItem('user', user.uid);
       } else {
         this.setState({ user: null });
         localStorage.removeItem('user');
       }
-    });
+    })
   }
 
   render() {
@@ -41,9 +41,7 @@ export default class extends Component {
         <Router>
           <div className="container">
             <Navbar user={this.state.user} />
-            {this.state.user ? 
-            (<Body />) 
-            : (<Login />)}
+            <Dashboard user={this.state.user} />
           </div>
         </Router>
       </MuiPickersUtilsProvider>

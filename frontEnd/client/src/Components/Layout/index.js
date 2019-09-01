@@ -1,9 +1,9 @@
 import Navbar from './Navbar';
-import Body from './Body';
+import Dashboard from './Dashboard';
 // import Footer from './Footer';
 
 export {
   Navbar,
-  Body, 
+  Dashboard, 
   // Footer,
 };
