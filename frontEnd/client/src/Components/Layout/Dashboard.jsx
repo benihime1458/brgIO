@@ -16,19 +16,13 @@ import CreateExercise from "../Exercises/create-exercise.component";
 
 const useStyles = makeStyles((theme => ({
   root: {
-    // display: 'flex',
-    // alignItems: 'stretch',
     height: '100%',
-    // margin: '50px'
   },
   content: {
-    // margin: 'auto',
-    // flexGrow: 1,
     height: '100%',
     padding: theme.spacing(15),
   },
   paper: {
-    // width: '10%',
     height: '100%',
   },
 })));

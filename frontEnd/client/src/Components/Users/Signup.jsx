@@ -41,13 +41,16 @@ export default props => {
 
     const newUser = {username: username};
 
-    axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data));
-
-    fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-    }).then((u) => { console.log(u) })
-      .catch((error) => {
-        console.log(error);
-      })
+    (username !='' || email != '' || password !='') ? 
+    axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
+      fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
+      }).then((u) => { console.log(u) })
+        .catch((error) => {
+          console.log(error)
+        })
+    )
+    : alert('fill out form completely')
+      
   }
 
   const classes = useStyles();
