@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import fire from './Fire';
-import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, TextField } from '@material-ui/core';
+import { Button, InputLabel, InputAdornment, Input, FormControl, TextField, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme => ({
@@ -9,7 +9,18 @@ const useStyles = makeStyles((theme => ({
     justifyContent: 'center',
   },
   content: {
-    padding: theme.spacing(1),
+    width: '70%',
+    height: '80%'
+  },
+  form: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(5),
+    width: '100%',
+
+  },
+  textField: {
+    marginTop: theme.spacing(3),
+    width: '100%',
   },
 })));
 
@@ -33,11 +44,11 @@ export default props => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <form>
-          <FormControl variant="standard">
-            <TextField label="Email: " type="email" value={email} onChange={changeEmail} />
-            <TextField label="Password: " type="password" value={password} onChange={changePassword} />
-            <Button type="submit" onClick={login}>Login</Button>
+        <form onSubmit={login}>
+          <FormControl className={classes.form}>
+              <TextField className={classes.textField} variant="filled" label="Email" type="email" value={email} onChange={changeEmail} />
+              <TextField className={classes.textField} variant="filled" label="Password" type="password" value={password} onChange={changePassword} />
+              <Button className={classes.textField} color="primary" variant="contained" type="submit">Login</Button>
           </FormControl>
         </form>
       </div>
