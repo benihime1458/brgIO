@@ -16,11 +16,20 @@ import CreateExercise from "../Exercises/create-exercise.component";
 
 const useStyles = makeStyles((theme => ({
   root: {
-    display: 'flex',
+    // display: 'flex',
+    // alignItems: 'stretch',
+    height: '100%',
+    // margin: '50px'
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(14),
+    // margin: 'auto',
+    // flexGrow: 1,
+    height: '100%',
+    padding: theme.spacing(15),
+  },
+  paper: {
+    // width: '10%',
+    height: '100%',
   },
 })));
 
@@ -32,29 +41,32 @@ export default props => {
 
   return (
     <div className={classes.root}>
-      <main className={classes.content}>
-        {!props.user ?
-          <>
-            <Tabs
-              value={index}
-              indicatorColor='primary'
-              textColor='primary'
-              centered
-            >
-              <Tab label='Login' onClick={() => setIndex(0)} />
-              <Tab label='Sign Up' onClick={() => setIndex(1)} />
-            </Tabs>
-            {index == 0 ? <Login /> : <Signup />}
-          </>
-          :
-          <>
-            <Route path="/" exact component={ExercisesList} />
-            <Route path="/edit/:id" component={EditExercise} />
-            <Route path="/create" component={CreateExercise} />
-            {/* <Route path="/user" component={CreateUser} /> Need to make a User path for settings */}
-          </>
-        }
-      </main>
+      <div className={classes.content}>
+        <Paper className={classes.paper}>
+          {!props.user ?
+            <>
+              <Tabs
+                value={index}
+                indicatorColor='primary'
+                textColor='primary'
+                variant="fullWidth"
+                centered
+              >
+                <Tab label='Login' onClick={() => setIndex(0)} />
+                <Tab label='Sign Up' onClick={() => setIndex(1)} />
+              </Tabs>
+              {index == 0 ? <Login /> : <Signup />}
+            </>
+            :
+            <>
+              <Route path="/" exact component={ExercisesList} />
+              <Route path="/edit/:id" component={EditExercise} />
+              <Route path="/create" component={CreateExercise} />
+              {/* <Route path="/user" component={CreateUser} /> Need to make a User path for settings */}
+            </>
+          }
+        </Paper>
+      </div>
     </div>
   );
 }
