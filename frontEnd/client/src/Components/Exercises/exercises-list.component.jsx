@@ -58,7 +58,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete(`${hosts}/exercises/' + ${id}`)
+    axios.delete(`${hosts}/exercises/ + ${id}`)
       .then(res => console.log(res.data));
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
