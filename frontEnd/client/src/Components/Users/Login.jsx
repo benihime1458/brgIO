@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme => ({
     justifyContent: 'center',
   },
   content: {
-    width: '70%',
-    height: '80%'
+    width: '85%',
+    height: '95%'
   },
   form: {
     marginTop: theme.spacing(2),
