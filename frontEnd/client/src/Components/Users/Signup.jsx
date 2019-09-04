@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import fire from './Fire';
 import axios from 'axios';
-import { Typography, Button, InputLabel, InputAdornment, Input, FormControl, TextField } from '@material-ui/core';
+import { Button, FormControl, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme => ({
     justifyContent: 'center',
   },
   content: {
-    width: '70%',
-    height: '80%'
+    width: '85%',
+    height: '95%'
   },
   form: {
     marginTop: theme.spacing(2),
@@ -28,29 +28,68 @@ const useStyles = makeStyles((theme => ({
 })));
 
 export default props => {
+  // onChange
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const changeUsername = (e) => setUsername(e.target.value);
-  const changeEmail = (e) => setEmail(e.target.value);
-  const changePassword = (e) => setPassword(e.target.value);
+  // validation & helper text
+  const [validUser, validateUser] = useState(null);
+  const [validEmail, validateEmail] = useState(null);
+  const [validPassword, validatePassword] = useState(null);
+  const [userHelper, setUserHelp] = useState(null);
+  const [emailHelper, setEmailHelp] = useState(null);
+  const [passwordHelp, setPasswordHelp] = useState(null);
+
+  const changeUsername = (e) => {
+    let usernameInput = e.target.value.toLowerCase().replace(/\s/g,'');
+    setUsername(usernameInput);
+    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20 && props.userList[usernameInput] !== true)
+  }
+  
+  const changeEmail = (e) => {
+    let emailInput = e.target.value.replace(/\s/g, '');
+    setEmail(emailInput);
+    e.target.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ?
+    validateEmail(true) : validateEmail(false)
+  }
+
+  const changePassword = (e) => {
+    setPassword(e.target.value);
+    validatePassword(e.target.value.length >= 6)
+  }
 
   const signup = e => {
     e.preventDefault();
 
     const newUser = {username: username};
 
-    (username !='' || email != '' || password !='') ? 
-    axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
-      fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-      }).then((u) => { console.log(u) })
-        .catch((error) => {
-          console.log(error)
-        })
-    )
-    : alert('fill out form completely')
-      
+   if (!validUser || !validEmail || !validPassword) {
+     alert('fill out form completely')
+     
+     if (username.length < 4 || username.length > 20) {
+      setUserHelp('4 character min. 20 character max. No spaces.')
+     }
+
+     props.userList[username] ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.')
+
+     validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
+
+     if (!validPassword) {
+      setPasswordHelp('6 character min. 20 character max.')
+      } else {
+      setPasswordHelp('Retype password.')
+      setPassword('') 
+      }
+
+   } else {
+     axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
+       fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
+       }).then((u) => { console.log(u) })
+         .catch((error) => {
+           console.log(error)
+         }))
+   }
   }
 
   const classes = useStyles();
@@ -60,9 +99,9 @@ export default props => {
       <div className={classes.content}>
         <form onSubmit={signup}>
           <FormControl className={classes.form}>
-            <TextField className={classes.textField} variant="filled"  label="Desired Username" type="string" value={username} onChange={changeUsername} />
-            <TextField className={classes.textField} variant="filled" label="Email" type="email" value={email} onChange={changeEmail} />
-            <TextField className={classes.textField} variant="filled" label="Password" type="password" value={password} onChange={changePassword} />
+            <TextField className={classes.textField} variant="filled" label="Desired Username" type="string" value={username} onChange={changeUsername} helperText={userHelper} />
+            <TextField className={classes.textField} variant="filled" label="Email" type="email" value={email} onChange={changeEmail} helperText={emailHelper}/>
+            <TextField className={classes.textField} variant="filled" label="Password" type="password" value={password} onChange={changePassword} helperText={passwordHelp} />
             <Button className={classes.textField} color="primary" variant="contained" type="submit">Sign Up</Button>
           </FormControl>
         </form>
