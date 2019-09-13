@@ -8,10 +8,11 @@ const climbSchema = new Schema({
   grade: { type: Number, required : true },
   wcw: { type: Boolean, required: true },
   color: { type: String, required: true },
+  setDate: { type: Date, required: true },
 }, {
     timestamps: true,
   });
 
 const Climb = mongoose.model('Climb', climbSchema);
 
-modules.exports = Climb;
+module.exports = Climb;
