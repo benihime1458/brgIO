@@ -13,7 +13,7 @@ router.route('/add').post((req, res) => {
   const grade = Number(req.body.grade);
   const wcw = req.body.wcw;
   const color = req.body.color;
-  const setDate = Date.parse(req.body.setDate);
+  const dateSet = Date.parse(req.body.dateSet);
 
   const newClimb = new Climb({
     number,
@@ -21,7 +21,7 @@ router.route('/add').post((req, res) => {
     grade,
     wcw,
     color,
-    setDate,
+    dateSet,
   });
 
   newClimb.save()
@@ -49,7 +49,7 @@ router.route('/update/:id').post((req, res) => {
       climb.grade = Number(req.body.grade);
       climb.wcw = req.body.wcw;
       climb.color = req.body.color;
-      climb.setDate = Date.parse(req.body.setDate);
+      climb.dateSet = Date.parse(req.body.dateSet);
 
       climb.save()
         .then(() => res.json('Climb updated!'))

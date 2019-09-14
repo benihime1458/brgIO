@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const climbSchema = new Schema({
-  number: { type: Number, required: true },
   area: { type: String, required: true },
-  grade: { type: Number, required : true },
-  wcw: { type: Boolean, required: true },
+  number: { type: Number, required: true },
   color: { type: String, required: true },
-  setDate: { type: Date, required: true },
+  grade: { type: Number, required : false },
+  dateSet: { type: Date, required: true },
+  wcw: { type: Boolean, required: false },
+  dyno: { type: Boolean, required: false },
 }, {
     timestamps: true,
   });
