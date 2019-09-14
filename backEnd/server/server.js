@@ -33,10 +33,12 @@ connection.once('open', () => {
 // routers
 const exercisesRouter = require('../database/routes/exercises');
 const usersRouter = require('../database/routes/users');
+const climbsRouter = require('../database/routes/climbs');
 
 // middleware from routers
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
+app.use('/climbs', climbsRouter);
 
 // server connection
 app.listen(port, () => console.log(`Listening on port ${port}!`));
