@@ -37,7 +37,7 @@ export default props => {
 
         let currentUser = {username: res.data[i].username, email: res.data[i].email}
 
-        console.log(currentUser)
+        // console.log(currentUser)
 
         userList[res.data[i].username] ? null : setUserList(prevState => {
           return { ...prevState, [currentUser.username]: currentUser }
