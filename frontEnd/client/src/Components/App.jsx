@@ -32,7 +32,7 @@ export default App => {
         localStorage.removeItem('user');
       }
     })
-  })
+  }, [])
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

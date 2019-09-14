@@ -11,6 +11,7 @@ import Signup from '../Users/Signup';
 
 // User Dashboard Components
 import ExercisesList from "../Exercises/exercises-list.component";
+import AllClimbs from "../Climbs/climbs-list";
 import EditExercise from "../Exercises/edit-exercise.component";
 import CreateExercise from "../Exercises/create-exercise.component";
 
@@ -64,9 +65,9 @@ export default props => {
             </>
             :
             <>
-              <Route path="/" exact component={ExercisesList} />
-              <Route path="/edit/:id" component={EditExercise} />
-              <Route path="/create" component={CreateExercise} />
+              <Route path="/" exact component={AllClimbs} />
+              {/* <Route path="/edit/:id" component={EditExercise} />
+              <Route path="/create" component={CreateExercise} /> */}
               {/* <Route path="/user" component={CreateUser} /> Need to make a User path for settings */}
             </>
           }

@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // connect to db
 const app = express();
+const db = require('../database/datagen/setClimbs.js')
 
 // env variables
 require('dotenv').config();
@@ -39,6 +40,12 @@ const climbsRouter = require('../database/routes/climbs');
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/climbs', climbsRouter);
+
+app.get('/climb/cave', (req, res) => {
+  db.getClimb(null, (err, data) => {
+    err ? console.log(err) : res.send(data);
+  })
+})
 
 // server connection
 app.listen(port, () => console.log(`Listening on port ${port}!`));
