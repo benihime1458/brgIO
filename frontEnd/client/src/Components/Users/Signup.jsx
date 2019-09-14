@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fire from './Fire';
 import axios from 'axios';
 import { Button, FormControl, TextField } from '@material-ui/core';
@@ -28,6 +28,24 @@ const useStyles = makeStyles((theme => ({
 })));
 
 export default props => {
+
+  const [userList, setUserList] = useState({});
+
+  useEffect(() => {
+    axios.get(`http://localhost:5635/users`).then(res => {
+      for (let i in res.data) {
+
+        let currentUser = {username: res.data[i].username, email: res.data[i].email}
+
+        // console.log(currentUser)
+
+        userList[res.data[i].username] ? null : setUserList(prevState => {
+          return { ...prevState, [currentUser.username]: currentUser }
+        });
+      }
+    })
+  }, [])
+
   // onChange
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -44,7 +62,7 @@ export default props => {
   const changeUsername = (e) => {
     let usernameInput = e.target.value.toLowerCase().replace(/\s/g,'');
     setUsername(usernameInput);
-    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20 && props.userList[usernameInput] !== true)
+    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20 && userList[usernameInput].username !== true)
   }
   
   const changeEmail = (e) => {
@@ -62,33 +80,34 @@ export default props => {
   const signup = e => {
     e.preventDefault();
 
-    const newUser = {username: username};
-
-   if (!validUser || !validEmail || !validPassword) {
-     alert('fill out form completely')
-     
-     if (username.length < 4 || username.length > 20) {
-      setUserHelp('4 character min. 20 character max. No spaces.')
-     }
-
-     props.userList[username] ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.')
-
-     validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
-
-     if (!validPassword) {
-      setPasswordHelp('6 character min. 20 character max.')
-      } else {
-      setPasswordHelp('Retype password.')
-      setPassword('') 
+    const newUser = {username: username, email: email};
+    
+    if (!validUser || !validEmail || !validPassword) {
+      alert('fill out form completely')
+      
+      if (username.length < 4 || username.length > 20) {
+        setUserHelp('4 character min. 20 character max. No spaces.')
       }
+      
+      userList[username].username ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.')
+      
+      validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
 
-   } else {
-     axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
-       fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-       }).then((u) => { console.log(u) })
-         .catch((error) => {
-           console.log(error)
-         }))
+      if (!validPassword) {
+        setPasswordHelp('6 character min. 20 character max.')
+      } else {
+        setPasswordHelp('Retype password.')
+        setPassword('') 
+      }
+      
+    } else {
+
+      axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
+        fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
+        }).then((u) => { console.log(u) })
+          .catch((error) => {
+            console.log(error)
+          }))
    }
   }
 

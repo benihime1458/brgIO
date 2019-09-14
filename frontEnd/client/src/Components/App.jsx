@@ -11,39 +11,35 @@ import { fire } from './Users';
 
 export default App => {
   const [user, setUser] = useState(null);
-  const [userList, setUserList] = useState({});
 
   useEffect(() => {
     fire.auth().onAuthStateChanged((user) => {
-      // user ? console.log(user.email) : null;
+
       if (user) {
-        setUser(user);
-        localStorage.setItem('user', user.uid);
+        axios.get(`http://localhost:5635/users`).then(res => {
+          for (let i in res.data) {
+            let userData = res.data[i];
+            
+            userData.email === user.email ? 
+            setUser({username: userData.username, email: userData.email}) 
+            : null
+            
+            localStorage.setItem('user', user.uid);
+          }
+        })
       } else {
         setUser(null);
         localStorage.removeItem('user');
       }
     })
   })
-  
-  useEffect(() => {
-    axios.get(`http://localhost:5635/users`).then(res => {
-      for (let i in res.data) {
-        // userList[res.data[i].username] ? null : setUserList(userList[res.data[i].username] = res.data[i].username)
-        let currentUser = res.data[i].username
-        userList[res.data[i].username] ? null : setUserList(prevState => {
-          return { ...prevState, [currentUser] : true}
-        });
-      }
-    })
-  }, [])
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Router>
         <div className="container">
           <Navbar user={user} />
-          <Dashboard user={user} userList={userList} />
+          <Dashboard user={user}  />
         </div>
       </Router>
     </MuiPickersUtilsProvider>
