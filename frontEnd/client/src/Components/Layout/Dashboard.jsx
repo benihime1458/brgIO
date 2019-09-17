@@ -58,7 +58,7 @@ export default props => {
                 <Tab label='Login' onClick={() => setIndex(0)} />
                 <Tab label='Sign Up' onClick={() => setIndex(1)} />
               </Tabs>
-              {index == 0 ? <Login /> : <Signup userList={props.userList}/>}
+              {index == 0 ? <Login /> : <Signup />}
               <Typography paragraph >
                 Welcome to brg.io! My name is Benny and I love bouldering. This web app is for quickly logging your bouldering session at Brides Rock Gym, my home gym. More features will be added as I continue to work on this project. =]
               </Typography>
