@@ -345,9 +345,4 @@ const setWestWall = () => {
 // setTopRope();
 // setWestWall();
 
-const getClimb = (err, resClimb) => {
-  err ? console.log('error: ', err) : 
-  Climb.find({area: 'cave'}).exec((err, climbs) => err ? console.log('error: ', err) : (climbs.sort((a, b) => a.number - b.number, resClimb(null, climbs))));
-} 
 
-module.exports.getClimb = getClimb;
