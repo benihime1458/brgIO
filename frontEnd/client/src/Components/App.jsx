@@ -21,7 +21,7 @@ export default App => {
             let userData = res.data[i];
             
             userData.email === user.email ? 
-            setUser({username: userData.username, email: userData.email}) 
+            setUser({username: userData.username, email: userData.email, problemLog: userData.problemLog}) 
             : null
             
             localStorage.setItem('user', user.uid);

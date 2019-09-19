@@ -1,5 +1,5 @@
 {
-  "workbench.colorTheme": "Material Theme High Contrast",
   "zenMode.hideLineNumbers": false,
-  "zenMode.hideActivityBar": false
+  "zenMode.hideActivityBar": false,
+  "workbench.colorTheme": "Blackboard"
 }

@@ -37,8 +37,6 @@ export default props => {
 
         let currentUser = {username: res.data[i].username, email: res.data[i].email}
 
-        // console.log(currentUser)
-
         userList[res.data[i].username] ? null : setUserList(prevState => {
           return { ...prevState, [currentUser.username]: currentUser }
         });
@@ -62,7 +60,7 @@ export default props => {
   const changeUsername = (e) => {
     let usernameInput = e.target.value.toLowerCase().replace(/\s/g,'');
     setUsername(usernameInput);
-    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20 && userList[usernameInput].username !== true)
+    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20)
   }
   
   const changeEmail = (e) => {
@@ -80,7 +78,7 @@ export default props => {
   const signup = e => {
     e.preventDefault();
 
-    const newUser = {username: username, email: email};
+    let newUser = {username: username, email: email, problemLog: []};
     
     if (!validUser || !validEmail || !validPassword) {
       alert('fill out form completely')
@@ -89,8 +87,9 @@ export default props => {
         setUserHelp('4 character min. 20 character max. No spaces.')
       }
       
-      userList[username].username ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.')
+      userList[username] ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.') 
       
+
       validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
 
       if (!validPassword) {
@@ -99,15 +98,29 @@ export default props => {
         setPasswordHelp('Retype password.')
         setPassword('') 
       }
-      
-    } else {
 
-      axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
-        fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-        }).then((u) => { console.log(u) })
-          .catch((error) => {
-            console.log(error)
-          }))
+    } else {
+      axios.get(`http://localhost:5635/climbs`).then(res => {
+        res.data.map(climb => {
+          let problem = {
+            number: climb.number, 
+            attempts: 0,
+            sends: 0,
+            flashed: false,
+            project: false,
+            notes: 'climbing notes'
+          }
+          newUser.problemLog.push(problem);
+        })
+
+        axios.post(`http://localhost:5635/users/add`, newUser).then(res => console.log(res.data)).then(
+          fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
+          }).then((u) => { console.log(u) })
+            .catch((error) => {
+              console.log(error)
+            }))
+      })
+
    }
   }
 
