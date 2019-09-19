@@ -79,6 +79,10 @@ export default props => {
               <StyledTableCell>Color</StyledTableCell>
               <StyledTableCell>Grade</StyledTableCell>
               <StyledTableCell>Date Set</StyledTableCell>
+              <StyledTableCell>Attempts</StyledTableCell>
+              <StyledTableCell>Sends</StyledTableCell>
+              <StyledTableCell>Flashed</StyledTableCell>
+              <StyledTableCell>Project</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
