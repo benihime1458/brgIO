@@ -10,10 +10,7 @@ import Login from '../Users/Login';
 import Signup from '../Users/Signup';
 
 // User Dashboard Components
-import ExercisesList from "../Exercises/exercises-list.component";
-import AllClimbs from "../Climbs/climbs-list";
-import EditExercise from "../Exercises/edit-exercise.component";
-import CreateExercise from "../Exercises/create-exercise.component";
+import ProblemList from "../Climbs/problem-list";
 
 const useStyles = makeStyles((theme => ({
   root: {
@@ -37,10 +34,6 @@ export default props => {
   const classes = useStyles();
   const [index, setIndex] = useState(0);
 
-  // props.user ? console.log('logged in as', props.user.email) : console.log('not logged in');
-  // props.userList ? console.log('userList', props.userList) : null;
-  // const users = props.userList;
-  // console.log('userList', users);
   return (
     <div className={classes.root}>
       <div className={classes.content}>
@@ -65,10 +58,10 @@ export default props => {
             </>
             :
             <>
-              <Route path="/" exact component={AllClimbs} />
-              {/* <Route path="/edit/:id" component={EditExercise} />
-              <Route path="/create" component={CreateExercise} /> */}
-              {/* <Route path="/user" component={CreateUser} /> Need to make a User path for settings */}
+              <Route path="/" 
+                exact 
+                render={() => <ProblemList user={props.user}/>} 
+              />
             </>
           }
         </Paper>

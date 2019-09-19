@@ -1,11 +1,10 @@
-import React, { Fragment, Component, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom'; // use to edit climbing notes and other details
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Card, CardMedia,
   Table, TableBody, TableCell, TableHead,
-  TableRow, Paper, Typography,
+  TableRow, Typography,
 } from '@material-ui/core';
 
 const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
@@ -41,32 +40,28 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-const Climb = props => ( 
+const Problem = props => (
   <StyledTableRow>
-    <StyledTableCell>{props.climb.number}</StyledTableCell>
-    <StyledTableCell>{props.climb.color}</StyledTableCell>
-    <StyledTableCell>V{props.climb.grade}</StyledTableCell>
-    <StyledTableCell>{props.climb.dateSet.substring(0, 10)}</StyledTableCell>
+    <StyledTableCell>{props.problem.number}</StyledTableCell>
+    <StyledTableCell>{props.problem.color}</StyledTableCell>
+    <StyledTableCell>V{props.problem.grade}</StyledTableCell>
+    <StyledTableCell>{props.problem.dateSet.substring(0, 10)}</StyledTableCell>
+    <StyledTableCell>{props.problem.attempts}</StyledTableCell>
+    <StyledTableCell>{props.problem.sends}</StyledTableCell>
+    <StyledTableCell>{props.problem.flashed}</StyledTableCell>
+    <StyledTableCell>{props.problem.project}</StyledTableCell>
   </StyledTableRow>
 )
 
 export default props => {
-  const [climbs, setClimbs] = useState([]);
+
   const classes = useStyles();
 
-  useEffect(() => {
-    axios.get(`http://localhost:5635/climbs`)
-      .then(response => {
-        setClimbs(response.data)
-      })
-      .catch((error) => console.log(error))
-  }, []);
-
-  const climbList = (wall) => {
-    let problems = climbs.filter(climb => climb.area === wall);
+  const problemList = (wall) => {
+    let problems = props.user.problemLog.filter(problem => problem.area === wall);
     problems.sort((a, b) => a.number - b.number);
-    problems = problems.map(climb => {
-      return <Climb climb={climb} key={climb._id}/>
+    problems = problems.map(problem => {
+      return <Problem problem={problem} key={problem._id}/>
     })
 
     return <Fragment>
@@ -93,14 +88,14 @@ export default props => {
     </Fragment> 
   }
   
-  const cave = climbList('cave');
-  const corridor = climbList('corridor');
-  const northeast = climbList('north east');
-  const slab = climbList('slab');
-  const southeast = climbList('south east');
-  const southwest = climbList('south west');
-  const toprope = climbList('top rope');
-  const westwall = climbList('west wall');
+  const cave = problemList('cave');
+  const corridor = problemList('corridor');
+  const northeast = problemList('north east');
+  const slab = problemList('slab');
+  const southeast = problemList('south east');
+  const southwest = problemList('south west');
+  const toprope = problemList('top rope');
+  const westwall = problemList('west wall');
   
   return (
     <Fragment>
