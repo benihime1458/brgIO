@@ -11,9 +11,7 @@ router.route('/add').post((req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const problemLog = req.body.problemLog;
-  // console.log(username)
-  // console.log(email)
-  console.log(req.body)
+
   const newUser = new User({ username, email, problemLog });
 
   newUser.save()
