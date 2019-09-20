@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -35,13 +35,11 @@ export default App => {
   }, [])
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Router>
-        <div className="container">
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Router >
           <Navbar user={user} />
-          <Dashboard user={user}  />
-        </div>
-      </Router>
-    </MuiPickersUtilsProvider>
+          <Dashboard user={user}/>
+        </Router>
+      </MuiPickersUtilsProvider>
   );
 }

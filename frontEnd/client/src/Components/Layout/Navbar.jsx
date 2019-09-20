@@ -145,14 +145,14 @@ export default props => {
 
           {props.user ? 
             <div>
-              <LogExercise />
+              {/* <LogExercise /> */}
               <Logout /> 
             </div>
             : null}
           
         </Toolbar>
       </AppBar>
-      {props.user ?
+      {/* {props.user ?
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -192,7 +192,7 @@ export default props => {
         </List>
       </Drawer>
       : null 
-      }
+      } */}
     </div>
   );
 }

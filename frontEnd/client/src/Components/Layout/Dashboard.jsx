@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { Typography, Paper, Tabs, Tab } from '@material-ui/core';
+import { LinearProgress, Typography, Paper, Tabs, Tab } from '@material-ui/core';
 
 // Null User Components
 import Login from '../Users/Login';
@@ -33,9 +33,19 @@ const useStyles = makeStyles((theme => ({
 export default props => {
   const classes = useStyles();
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(null);
+
+    useEffect(() => {
+      props.user ? null 
+      : (
+        setLoading(true), 
+        setTimeout(() => {
+          setLoading(false)
+        }, 1500)) 
+    }, [])
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <div className={classes.content}>
         <Paper className={classes.paper}>
           {!props.user ? 
@@ -58,10 +68,9 @@ export default props => {
             </>
             :
             <>
-              <Route path="/" 
-                exact 
-                render={() => <ProblemList user={props.user}/>} 
-              />
+            {
+              loading ? <Route path="/" render={() => <LinearProgress/>} />  : <Route path="/" exact render={() => <ProblemList user={props.user} />}/>
+            }  
             </>
           }
         </Paper>
@@ -69,4 +78,3 @@ export default props => {
     </div>
   );
 }
-

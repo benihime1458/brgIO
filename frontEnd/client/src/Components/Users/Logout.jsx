@@ -17,7 +17,7 @@ export default props => {
   }
 
   return (
-    <Button onClick={signout}>Logout</Button>
+    <Button variant="contained" color="secondary" onClick={signout}>Logout</Button>
   );
 }
 
