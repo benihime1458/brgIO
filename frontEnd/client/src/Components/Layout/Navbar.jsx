@@ -120,6 +120,24 @@ export default props => {
     console.log('saveLog: ', user.problemLog[0]);
     axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
   }
+  
+  const saveLocal = () => {
+    let user = props.user;
+    console.log('saveLocal: ', user.problemLog[0]);
+    // axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
+  
+    localStorage.setItem('problemLog', JSON.stringify(user.problemLog))
+  }
+  
+  const logLocal = () => {
+    const log = localStorage.getItem('problemLog');
+    console.log(log);
+  }
+  
+  const parseLocal = () => {
+    const parsed = JSON.parse(localStorage.getItem('problemLog'));
+    console.log(parsed);
+  }
 
   return (
     <div className={classes.root}>
@@ -155,6 +173,15 @@ export default props => {
             <div >
               <Button style={{margin: 10}} variant="contained" onClick={saveLog}>
               Save Log
+              </Button> 
+              <Button style={{margin: 10}} variant="contained" onClick={saveLocal}>
+              Save Local
+              </Button> 
+              <Button style={{margin: 10}} variant="contained" onClick={logLocal}>
+              Log Local
+              </Button> 
+              <Button style={{margin: 10}} variant="contained" onClick={parseLocal}>
+              Parse Local
               </Button> 
               <Logout style={{ margin: 10 }} /> 
             </div>

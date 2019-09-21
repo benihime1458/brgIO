@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // use to edit climbing notes and other details
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardMedia, Checkbox,
   Table, TableBody, TableCell, TableHead,
-  TableRow, Typography, Divider, IconButton, Button,
+  TableRow, Typography, Divider, IconButton, Paper,
 } from '@material-ui/core';
 import Add  from '@material-ui/icons/Add';
 import Remove  from '@material-ui/icons/Remove';
@@ -15,6 +15,7 @@ const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' |
 const useStyles = makeStyles(theme => ({
   card: {
     marginBottom: 25,
+    overflowX: 'auto',
   },
   media: {
     height: 0,
@@ -106,18 +107,11 @@ export default props => {
     problems = problems.map(problem => {
       return <Problem problem={problem} key={problem._id} classes={classes} />
     })
-  
-  // const saveLog = () => {
-  //   let user = props.user;
-  //   console.log('saveLog: ', user);
-  //   axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
-  // }
         
-    return <Fragment>
-      <Typography align="center" variant='h4' gutterBottom>{wall.toUpperCase()}</Typography>
-      {/* <Button onClick={saveLog} variant='contained'>Save</Button> */}
+    return <>
+    <Typography align="center" variant='h4' gutterBottom>{wall.toUpperCase()}</Typography>
       <Card className={classes.card}>
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <StyledTableCell align="center"># | Grade | Color</StyledTableCell>
@@ -132,7 +126,7 @@ export default props => {
           </TableBody>
         </Table>
       </Card>
-    </Fragment> 
+    </> 
   }
   
   const cave = problemList('cave');
@@ -145,19 +139,19 @@ export default props => {
   const westwall = problemList('west wall');
   
   return (
-    <Fragment>
+    <>
       <Typography align="center" variant='h4' gutterBottom>ROUTESETTING MAP</Typography>
-        <Card className={classes.card}>
-          <CardMedia className={classes.media} image="images/brgmap.jpg" title="brgmap"/>
-        </Card>
-        {cave}
-        {corridor}
-        {northeast}
-        {slab}
-        {southeast}
-        {southwest}
-        {westwall}
-        {toprope}
-    </Fragment>
+      <Card className={classes.card}>
+        <CardMedia className={classes.media} image="images/brgmap.jpg" title="brgmap"/>
+      </Card>
+      {cave}
+      {corridor}
+      {northeast}
+      {slab}
+      {southeast}
+      {southwest}
+      {westwall}
+      {toprope}
+    </>
   )
 }
