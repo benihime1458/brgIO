@@ -8,6 +8,7 @@ import { LinearProgress, Typography, Paper, Tabs, Tab } from '@material-ui/core'
 // Null User Components
 import Login from '../Users/Login';
 import Signup from '../Users/Signup';
+import Navbar from './Navbar'
 
 // User Dashboard Components
 import ProblemList from "../Climbs/problem-list";
@@ -45,6 +46,8 @@ export default props => {
     }, [])
 
   return (
+    <>
+    <Navbar user={props.user}/>
     <div className={classes.root} >
       <div className={classes.content}>
         <Paper className={classes.paper}>
@@ -76,5 +79,6 @@ export default props => {
         </Paper>
       </div>
     </div>
+    </>
   );
 }

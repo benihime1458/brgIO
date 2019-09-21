@@ -37,7 +37,7 @@ export default App => {
   return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router >
-          <Navbar user={user} />
+          {/* <Navbar user={user} /> */}
           <Dashboard user={user}/>
         </Router>
       </MuiPickersUtilsProvider>
