@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import clsx from 'clsx';
 
@@ -16,7 +17,8 @@ import {
   IconButton,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Button
 } from '@material-ui/core';
 
 // material-ui icons
@@ -113,6 +115,12 @@ export default props => {
     setOpen(false);
   }
 
+  const saveLog = () => {
+    let user = props.user;
+    console.log('saveLog: ', user.problemLog[0]);
+    axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -123,7 +131,7 @@ export default props => {
         })}
       >
         <Toolbar>
-          {props.user ? 
+          {/* {props.user ? 
             <IconButton
               color="inherit"
               aria-label="Open awer"
@@ -137,16 +145,18 @@ export default props => {
             </IconButton>
           :
           null
-          }
+          } */}
           <Typography variant="h6" noWrap style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>brgio</Link>
           </Typography>
 
 
           {props.user ? 
-            <div>
-              {/* <LogExercise /> */}
-              <Logout /> 
+            <div >
+              <Button style={{margin: 10}} variant="contained" onClick={saveLog}>
+              Save Log
+              </Button> 
+              <Logout style={{ margin: 10 }} /> 
             </div>
             : null}
           
