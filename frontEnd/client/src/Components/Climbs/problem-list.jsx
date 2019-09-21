@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom'; // use to edit climbing notes and other details
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardMedia, Checkbox,
   Table, TableBody, TableCell, TableHead,
-  TableRow, Typography, Divider, IconButton,
+  TableRow, Typography, Divider, IconButton, Button,
 } from '@material-ui/core';
 import Add  from '@material-ui/icons/Add';
 import Remove  from '@material-ui/icons/Remove';
@@ -43,60 +44,78 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow);
 
 const Problem = props => {
-  let currentProblem = props.problem;
-  let [flashed, setFlashed] = useState(currentProblem.flashed)
-  let [project, setProject] = useState(currentProblem.flashed)
-  let [attempts, setAttempts] = useState(currentProblem.attempts)
-  let [sends, setSends] = useState(currentProblem.sends)
+  const [flashed, setFlashed] = useState(props.problem.flashed)
+  const [project, setProject] = useState(props.problem.project)
+  const [attempts, setAttempts] = useState(props.problem.attempts)
+  const [sends, setSends] = useState(props.problem.sends)
+  props.problem.attempts = attempts
+  props.problem.sends = sends
+  props.problem.flashed = flashed
+  props.problem.project = project
 
   return (<StyledTableRow>
       <StyledTableCell align="center" width="150px">
         <Card style={{ width: '100%'}} >
           <CardContent style={{ backgroundColor: '#eeeeee'}}>
             <Card>
-              <Typography variant="body2" style={{backgroundColor: 'white'}}>{currentProblem.number}</Typography>
+              <Typography variant="body2" style={{backgroundColor: 'white'}}>{props.problem.number}</Typography>
               <Divider/>
-              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>V{currentProblem.grade}</Typography>
+              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>V{props.problem.grade}</Typography>
               <Divider/>
-              <Typography style={{ backgroundColor: `${currentProblem.color}`, height: '20px'}} ></Typography>
+              <Typography style={{ backgroundColor: `${props.problem.color}`, height: '20px'}} ></Typography>
             </Card>
           </CardContent>
         </Card>
       </StyledTableCell>
       <StyledTableCell align="center">
-      <Typography variant="subtitle2">
-        <IconButton onClick={() => setAttempts(attempts - 1)} color="secondary"><Remove fontSize="small" /></IconButton>
-        {attempts}
-        <IconButton onClick={() => setAttempts(attempts + 1)} color="primary"><Add fontSize="small" /></IconButton></Typography>
+        <Typography variant="subtitle2">
+          <IconButton onClick={() => setAttempts(attempts - 1)} color="secondary">
+            <Remove fontSize="small" />
+          </IconButton>
+          {props.problem.attempts}
+          <IconButton onClick={() =>setAttempts(attempts + 1)} color="primary">
+            <Add fontSize="small" />
+          </IconButton>
+        </Typography>
       </StyledTableCell>
       <StyledTableCell align="center">
       <Typography variant="subtitle2">
         <IconButton onClick={() => setSends(sends - 1)} color="secondary"><Remove fontSize="small" /></IconButton>
-        {sends}
-        <IconButton onClick={() => setSends(sends + 1)} color="primary"><Add fontSize="small" /></IconButton></Typography>
+        {props.problem.sends}
+        <IconButton onClick={() => setSends(sends + 1)} color="primary"><Add fontSize="small" />
+        </IconButton>
+        </Typography>
       </StyledTableCell>
       <StyledTableCell align="center">
-      {<Checkbox checked={flashed} onClick={() => flashed ? setFlashed(false) : setFlashed(true)}/>}
+      {<Checkbox checked={props.problem.flashed} onClick={() => props.problem.flashed ? setFlashed(false) : setFlashed(true)}/>}
       </StyledTableCell>
       <StyledTableCell align="center">
-      {<Checkbox color="primary" checked={project} onClick={() => project ? setProject(false) : setProject(true)}/>}
+      {<Checkbox color="primary" checked={project} onClick={() => props.problem.project ? setProject(false) : setProject(true)}/>}
       </StyledTableCell>
     </StyledTableRow>)
 }
 
 export default props => {
-
+  
   const classes = useStyles();
-
+  
+  
   const problemList = (wall) => {
     let problems = props.user.problemLog.filter(problem => problem.area === wall);
     problems.sort((a, b) => a.number - b.number);
     problems = problems.map(problem => {
-      return <Problem problem={problem} key={problem._id} classes={classes}/>
+      return <Problem problem={problem} key={problem._id} classes={classes} />
     })
-
+  
+  // const saveLog = () => {
+  //   let user = props.user;
+  //   console.log('saveLog: ', user);
+  //   axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
+  // }
+        
     return <Fragment>
       <Typography align="center" variant='h4' gutterBottom>{wall.toUpperCase()}</Typography>
+      {/* <Button onClick={saveLog} variant='contained'>Save</Button> */}
       <Card className={classes.card}>
         <Table>
           <TableHead>

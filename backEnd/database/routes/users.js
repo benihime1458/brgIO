@@ -19,4 +19,21 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/savelog').post((req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
+  const problemLog = req.body.problemLog;
+
+  User.findOne({username: `${username}`, email: `${email}`})
+    .then(user => {
+      user.problemLog = problemLog
+      
+      user.save()
+        .then(() => res.json('Log updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+
+});
+
 module.exports = router;
