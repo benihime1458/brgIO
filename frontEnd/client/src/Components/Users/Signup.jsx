@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import fire from './Fire';
 import axios from 'axios';
 import { Button, FormControl, TextField } from '@material-ui/core';
@@ -29,20 +29,7 @@ const useStyles = makeStyles((theme => ({
 
 export default props => {
 
-  const [userList, setUserList] = useState({});
-
-  useEffect(() => {
-    axios.get(`http://localhost:5635/users`).then(res => {
-      for (let i in res.data) {
-
-        let currentUser = {username: res.data[i].username, email: res.data[i].email}
-
-        userList[res.data[i].username] ? null : setUserList(prevState => {
-          return { ...prevState, [currentUser.username]: currentUser }
-        });
-      }
-    })
-  }, [])
+  let userList = props.userList;
 
   // onChange
   const [username, setUsername] = useState('');

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
-import { LinearProgress, Typography, Paper, Tabs, Tab } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { LinearProgress, Typography, Paper, Tabs, Tab, Button } from '@material-ui/core';
 
 // Null User Components
 import Login from '../Users/Login';
@@ -26,7 +25,8 @@ const useStyles = makeStyles((theme => ({
   },
   paper: {
     height: '100%',
-    minWidth: '50%',
+    minWidth: '450px',
+    maxWidth: '700px',
     padding: theme.spacing(5),
   },
 })));
@@ -35,19 +35,33 @@ export default props => {
   const classes = useStyles();
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(null);
+  const [userList, setUserList] = useState({});
 
-    useEffect(() => {
-      props.user ? null 
-      : (
-        setLoading(true), 
-        setTimeout(() => {
-          setLoading(false)
-        }, 1500)) 
-    }, [])
+  useEffect(() => {
+    axios.get(`http://localhost:5635/users`).then(res => {
+      for (let i in res.data) {
+
+        let currentUser = { username: res.data[i].username, email: res.data[i].email }
+
+        userList[res.data[i].username] ? null : setUserList(prevState => {
+          return { ...prevState, [currentUser.username]: currentUser }
+        });
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    props.user ? null 
+    : (
+      setLoading(true), 
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)) 
+  }, [])
 
   return (
     <>
-    <Navbar user={props.user}/>
+    <Navbar user={props.user} />
     <div className={classes.root} >
       <div className={classes.content}>
         <Paper className={classes.paper}>
@@ -64,7 +78,7 @@ export default props => {
                 <Tab label='Login' onClick={() => setIndex(0)} />
                 <Tab label='Sign Up' onClick={() => setIndex(1)} />
               </Tabs>
-              {index == 0 ? <Login /> : <Signup />}
+              {index == 0 ? <Login /> : <Signup userList={userList}/>}
               <Typography paragraph >
                 Welcome to brg.io! My name is Benny and I love bouldering. This web app is for quickly logging your bouldering session at Brides Rock Gym, my home gym. More features will be added as I continue to work on this project. =]
               </Typography>
