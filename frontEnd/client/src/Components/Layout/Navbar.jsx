@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import clsx from 'clsx';
 
@@ -33,6 +34,9 @@ import LogExercise from '../Exercises/Dialogs/LogExercise';
 
 // Logout
 import Logout from '../Users/Logout';
+
+// Demo Button
+import Demo from '../Users/Demo';
 
 const drawerWidth = 240;
 
@@ -139,6 +143,8 @@ export default props => {
     console.log(parsed);
   }
 
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -169,7 +175,7 @@ export default props => {
           </Typography>
 
 
-          {props.user ? 
+          {props.user && props.user.username === "benihime1458" ? 
             <div >
               <Button style={{margin: 10}} variant="contained" onClick={saveLog}>
               Save Log
@@ -183,9 +189,22 @@ export default props => {
               <Button style={{margin: 10}} variant="contained" onClick={parseLocal}>
               Parse Local
               </Button> 
-              <Logout style={{ margin: 10 }} /> 
+              <Logout style={{ margin: 10 }} user={props.user}/> 
             </div>
-            : null}
+            : props.user && props.user.username ? 
+              <>
+                <Button style={{ margin: 10 }} variant="contained" onClick={saveLog}>
+                  Save Log
+                </Button>
+                <Logout style={{ margin: 10 }} user={props.user}/>
+              </>
+              : props.user ? 
+                <>
+                  <Button style={{ margin: 10 }} variant="contained" disabled>Save Log</Button>
+                  <Logout style={{ margin: 10 }} user={props.user}/>
+                </> 
+                : <Demo />
+            }
           
         </Toolbar>
       </AppBar>
