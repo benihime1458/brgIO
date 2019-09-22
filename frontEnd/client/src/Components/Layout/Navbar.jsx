@@ -106,6 +106,8 @@ const useStyles = makeStyles((theme => ({
   },
 })));
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635'
+
 export default props => {
   const classes = useStyles();
   const theme = useTheme();
@@ -122,13 +124,12 @@ export default props => {
   const saveLog = () => {
     let user = props.user;
     console.log('saveLog: ', user.problemLog[0]);
-    axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
+    axios.post(`${hosts}/users/savelog`, user).then(res => console.log(res.data))
   }
   
   const saveLocal = () => {
     let user = props.user;
     console.log('saveLocal: ', user.problemLog[0]);
-    // axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
   
     localStorage.setItem('problemLog', JSON.stringify(user.problemLog))
   }

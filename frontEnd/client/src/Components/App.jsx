@@ -9,6 +9,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Dashboard } from './Layout';
 import { fire } from './Users';
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635'
+
 export default App => {
   const [user, setUser] = useState(null);
 
@@ -20,7 +22,7 @@ export default App => {
         let localProblems = [];
         if (!localStorage.getItem('problemLog')) {
           let newProblems = [];
-          axios.get(`http://localhost:5635/climbs`)
+          axios.get(`${hosts}/climbs`)
           .then(res => {
             res.data.map(climb => {
               let problem = climb;
@@ -45,7 +47,7 @@ export default App => {
       } 
       
       if (user !== null && !user.isAnonymous) {
-        axios.get(`http://localhost:5635/users`).then(res => {
+        axios.get(`${hosts}/users`).then(res => {
           for (let i in res.data) {
             let userData = res.data[i];
             

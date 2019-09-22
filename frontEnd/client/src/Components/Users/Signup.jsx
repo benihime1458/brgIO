@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, FormControl, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635'
 
 const useStyles = makeStyles((theme => ({
   root: {
@@ -87,7 +87,7 @@ export default props => {
       }
 
     } else {
-      axios.get(`http://localhost:5635/climbs`).then(res => {
+      axios.get(`${hosts}/climbs`).then(res => {
         res.data.map(climb => {
 
           let problem = climb;
@@ -100,7 +100,7 @@ export default props => {
           newUser.problemLog.push(problem);
         })
 
-        axios.post(`http://localhost:5635/users/add`, newUser).then(
+        axios.post(`${hosts}/users/add`, newUser).then(
           fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
           }).then((u) => { console.log(u) })
             .catch((error) => {

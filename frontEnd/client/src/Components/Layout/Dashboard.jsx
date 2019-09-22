@@ -12,6 +12,8 @@ import Navbar from './Navbar'
 // User Dashboard Components
 import ProblemList from "../Climbs/problem-list";
 
+const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635'
+
 const useStyles = makeStyles((theme => ({
   root: {
     height: '100%',
@@ -38,7 +40,7 @@ export default props => {
   const [userList, setUserList] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:5635/users`).then(res => {
+    axios.get(`${hosts}/users`).then(res => {
       for (let i in res.data) {
 
         let currentUser = { username: res.data[i].username, email: res.data[i].email }
