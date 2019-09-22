@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
-import { Navbar, Dashboard } from './Layout';
+import { Dashboard } from './Layout';
 import { fire } from './Users';
 
 export default App => {
@@ -14,8 +14,37 @@ export default App => {
 
   useEffect(() => {
     fire.auth().onAuthStateChanged((user) => {
+      localStorage.getItem('problemLog') ? localStorage.removeItem('problemLog') : null
 
-      if (user) {
+      if (user !== null && user.isAnonymous) {
+        let localProblems = [];
+        if (!localStorage.getItem('problemLog')) {
+          let newProblems = [];
+          axios.get(`http://localhost:5635/climbs`)
+          .then(res => {
+            res.data.map(climb => {
+              let problem = climb;
+              problem.attempts = 0
+              problem.sends = 0
+              problem.flashed = false
+              problem.project = false
+              problem.notes = 'climbing notes'
+              
+              newProblems.push(problem)
+            })
+            
+          }).then(() => localProblems = newProblems, user.problemLog = localProblems)
+          .then(() => localStorage.setItem('problemLog', JSON.stringify(localProblems))).then(() => {
+            setUser({problemLog: localProblems})
+            localStorage.setItem('user', 'demo');
+            })
+        } else {
+            setUser({ problemLog: JSON.parse(localStorage.getItem('problemLog')) })
+            localStorage.setItem('user', user.uid);
+        }
+      } 
+      
+      if (user !== null && !user.isAnonymous) {
         axios.get(`http://localhost:5635/users`).then(res => {
           for (let i in res.data) {
             let userData = res.data[i];
@@ -31,13 +60,13 @@ export default App => {
         setUser(null);
         localStorage.removeItem('user');
       }
+     
     })
   }, [])
 
   return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router >
-          {/* <Navbar user={user} /> */}
           <Dashboard user={user}/>
         </Router>
       </MuiPickersUtilsProvider>
