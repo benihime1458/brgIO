@@ -20,7 +20,7 @@ export default App => {
         let localProblems = [];
         if (!localStorage.getItem('problemLog')) {
           let newProblems = [];
-          axios.get(`http://localhost:5635/climbs`)
+          axios.get(`/climbs`)
           .then(res => {
             res.data.map(climb => {
               let problem = climb;
@@ -45,7 +45,7 @@ export default App => {
       } 
       
       if (user !== null && !user.isAnonymous) {
-        axios.get(`http://localhost:5635/users`).then(res => {
+        axios.get(`/users`).then(res => {
           for (let i in res.data) {
             let userData = res.data[i];
             

@@ -122,7 +122,7 @@ export default props => {
   const saveLog = () => {
     let user = props.user;
     console.log('saveLog: ', user.problemLog[0]);
-    axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
+    axios.post(`/users/savelog`, user).then(res => console.log(res.data))
   }
   
   const saveLocal = () => {

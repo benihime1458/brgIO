@@ -38,7 +38,7 @@ export default props => {
   const [userList, setUserList] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:5635/users`).then(res => {
+    axios.get(`/users`).then(res => {
       for (let i in res.data) {
 
         let currentUser = { username: res.data[i].username, email: res.data[i].email }

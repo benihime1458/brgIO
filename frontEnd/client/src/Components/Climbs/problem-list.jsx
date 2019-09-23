@@ -10,8 +10,6 @@ import { Card, CardContent, CardMedia, Checkbox,
 import Add  from '@material-ui/icons/Add';
 import Remove  from '@material-ui/icons/Remove';
 
-const hosts = 'http://ec2-54-183-225-234.us-west-1.compute.amazonaws.com:5635' || 'http://localhost:5635';
-
 const useStyles = makeStyles(theme => ({
   card: {
     marginBottom: 25,
