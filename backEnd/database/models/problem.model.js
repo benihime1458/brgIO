@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const problemLog = new Schema({
+const problemSchema = new Schema({
   number: { type: Number, required: true },
   area: { type: String, required: true },
   grade: { type: String, required: true },
@@ -14,29 +14,9 @@ const problemLog = new Schema({
   project: { type: Boolean, required: false },
   notes: { type: String, required: false }, 
 }, {
-  timestamps: true,
-});
-
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true, 
-    trim: true,
-    match: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
-  },
-  problemLog: [problemLog]
-}, {
     timestamps: true,
   });
 
-const User = mongoose.model('User', userSchema);
+const Problem = mongoose.model('Problem', problemSchema);
 
-module.exports = User;
+module.exports = Problem;

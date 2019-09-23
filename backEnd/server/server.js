@@ -36,11 +36,13 @@ connection.once('open', () => {
 const exercisesRouter = require('../database/routes/exercises');
 const usersRouter = require('../database/routes/users');
 const climbsRouter = require('../database/routes/climbs');
+const problemsRouter = require('../database/routes/problems');
 
 // middleware from routers
 // app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/climbs', climbsRouter);
+app.use('/problems', problemsRouter);
 
 // server connection
 app.listen(port, () => console.log(`Listening on port ${port}!`));
