@@ -42,24 +42,29 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
+const currentDate = new Date;
+
 const Problem = props => {
   const [flashed, setFlashed] = useState(props.problem.flashed)
   const [project, setProject] = useState(props.problem.project)
   const [attempts, setAttempts] = useState(props.problem.attempts)
   const [sends, setSends] = useState(props.problem.sends)
+  const setDate = new Date(props.problem.dateSet);
+  const lessThan7DaysOld = (currentDate - setDate) < 678017049
+  
   props.problem.attempts = attempts
   props.problem.sends = sends
   props.problem.flashed = flashed
   props.problem.project = project
 
-  return (<StyledTableRow>
+  return (props.problem.number >= 500 ? null : <StyledTableRow>
       <StyledTableCell align="center" width="150px">
         <Card style={{ width: '100%'}} >
           <CardContent style={{ backgroundColor: '#eeeeee'}}>
             <Card>
               <Typography variant="body2" style={{backgroundColor: 'white'}}>{props.problem.number}</Typography>
               <Divider/>
-              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>{props.problem.grade}</Typography>
+              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>{lessThan7DaysOld ? "?" : props.problem.grade}</Typography>
               <Divider/>
               <Typography style={{ backgroundColor: `${props.problem.color}`, height: '20px'}} ></Typography>
             </Card>
@@ -100,15 +105,18 @@ export default props => {
   const classes = useStyles();
   const problems = props.problems
 
-  console.log('user problemlog: ', problems)
+  // console.log('user problemlog: ', problems)
   
   const problemList = (wall) => {
     let list = problems.filter(problem => problem.area === wall).sort((a, b) => a.number - b.number).map(problem => {
       return <Problem problem={problem} key={problem._id} classes={classes} />
     })
-        
+
+    let latestSet = problems.filter(problem => problem.area === wall).reduce((a, b) => a.dateSet > b.dateSet ? a.dateSet : b.dateSet)
+    
     return <>
     <Typography align="center" variant='h4' gutterBottom>{wall.toUpperCase()}</Typography>
+    <Typography variant='caption' gutterBottom>{latestSet}</Typography>
       <Card className={classes.card}>
         <Table size="small">
           <TableHead>
