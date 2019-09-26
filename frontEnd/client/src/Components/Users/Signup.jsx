@@ -85,18 +85,9 @@ export default props => {
       }
 
     } else {
-      axios.get(`/climbs`).then(res => {
-        res.data.map(climb => {
 
-          let problem = climb;
-          problem.attempts = 0
-          problem.sends = 0
-          problem.flashed = false
-          problem.project = false
-          problem.notes = 'climbing notes'
-
-          newUser.problemLog.push(problem);
-        })
+      axios.get(`/problems`).then(res => {
+        newUser.problemLog = res.data
 
         axios.post(`/users/add`, newUser).then(
           fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {

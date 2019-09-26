@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const problemLog = new Schema({
   number: { type: Number, required: true },
   area: { type: String, required: true },
-  grade: { type: String, required: true },
+  grade: { type: String, required: false },
   color: { type: String, required: true },
   dateSet: { type: Date, required: true },
   attempts: { type: Number, required: false },

@@ -14,37 +14,8 @@ export default App => {
 
   useEffect(() => {
     fire.auth().onAuthStateChanged((user) => {
-      localStorage.getItem('problemLog') ? localStorage.removeItem('problemLog') : null
-
-      if (user !== null && user.isAnonymous) {
-        let localProblems = [];
-        if (!localStorage.getItem('problemLog')) {
-          let newProblems = [];
-          axios.get(`/climbs`)
-          .then(res => {
-            res.data.map(climb => {
-              let problem = climb;
-              problem.attempts = 0
-              problem.sends = 0
-              problem.flashed = false
-              problem.project = false
-              problem.notes = 'climbing notes'
-              
-              newProblems.push(problem)
-            })
-            
-          }).then(() => localProblems = newProblems, user.problemLog = localProblems)
-          .then(() => localStorage.setItem('problemLog', JSON.stringify(localProblems))).then(() => {
-            setUser({problemLog: localProblems})
-            localStorage.setItem('user', 'demo');
-            })
-        } else {
-            setUser({ problemLog: JSON.parse(localStorage.getItem('problemLog')) })
-            localStorage.setItem('user', user.uid);
-        }
-      } 
       
-      if (user !== null && !user.isAnonymous) {
+      if (user) {
         axios.get(`/users`).then(res => {
           for (let i in res.data) {
             let userData = res.data[i];

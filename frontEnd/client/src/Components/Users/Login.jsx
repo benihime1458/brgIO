@@ -33,6 +33,7 @@ export default props => {
 
   const login = e => {
     e.preventDefault();
+    props.setDemo(false);
     fire.auth().signInWithEmailAndPassword(email, password).then((u) => {
     }).catch((error) => {
       console.log(error);

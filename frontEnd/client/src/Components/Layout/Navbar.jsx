@@ -128,7 +128,6 @@ export default props => {
   const saveLocal = () => {
     let user = props.user;
     console.log('saveLocal: ', user.problemLog[0]);
-    // axios.post(`http://localhost:5635/users/savelog`, user).then(res => console.log(res.data))
   
     localStorage.setItem('problemLog', JSON.stringify(user.problemLog))
   }
@@ -142,8 +141,6 @@ export default props => {
     const parsed = JSON.parse(localStorage.getItem('problemLog'));
     console.log(parsed);
   }
-
-
 
   return (
     <div className={classes.root}>
@@ -189,21 +186,21 @@ export default props => {
               <Button style={{margin: 10}} variant="contained" onClick={parseLocal}>
               Parse Local
               </Button> 
-              <Logout style={{ margin: 10 }} user={props.user}/> 
+              <Logout style={{ margin: 10 }} user={props.user} demo={props.demo} setDemo={props.setDemo}/> 
             </div>
             : props.user && props.user.username ? 
               <>
                 <Button style={{ margin: 10 }} variant="contained" onClick={saveLog}>
                   Save Log
                 </Button>
-                <Logout style={{ margin: 10 }} user={props.user}/>
+                <Logout style={{ margin: 10 }} user={props.user} demo={props.demo} setDemo={props.setDemo}/>
               </>
-              : props.user ? 
-                <>
-                  <Button style={{ margin: 10 }} variant="contained" disabled>Save Log</Button>
-                  <Logout style={{ margin: 10 }} user={props.user}/>
-                </> 
-                : <Demo />
+              : !props.demo && !props.user ? <Demo setDemo={props.setDemo} /> : 
+                  <>
+                    <Button style={{ margin: 10 }} variant="contained" disabled>Save Log</Button>
+                    <Logout style={{ margin: 10 }} user={props.user} demo={props.demo} setDemo={props.setDemo}/>
+                  </> 
+
             }
           
         </Toolbar>

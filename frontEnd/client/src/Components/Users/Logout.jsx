@@ -6,18 +6,20 @@ export default props => {
 
   const signout = e => {
     e.preventDefault();
+
+    props.demo ? props.setDemo(false) :  
+
     fire.auth().signOut().then((u) => {
-      localStorage.getItem('problemLog') ? localStorage.removeItem('problemLog') : null
-      localStorage.getItem('user') ? localStorage.removeItem('user') : null
+
       alert('signed out')
-    window.location = '/';
+      window.location = '/';
     }).catch((error) => {
       console.log(error);
       
     });
   }
 
-  const currentUser = props.user.username ? props.user.username.toUpperCase() : 'Demo Mode'
+  const currentUser = props.user ? props.user.username.toUpperCase() : 'Demo Mode'
 
   return <Button variant="contained" color="secondary" onClick={signout}>Logout: {currentUser}</Button>
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // use to edit climbing notes and other details
 
@@ -59,7 +59,7 @@ const Problem = props => {
             <Card>
               <Typography variant="body2" style={{backgroundColor: 'white'}}>{props.problem.number}</Typography>
               <Divider/>
-              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>V{props.problem.grade}</Typography>
+              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>{props.problem.grade}</Typography>
               <Divider/>
               <Typography style={{ backgroundColor: `${props.problem.color}`, height: '20px'}} ></Typography>
             </Card>
@@ -94,15 +94,16 @@ const Problem = props => {
     </StyledTableRow>)
 }
 
+
 export default props => {
   
   const classes = useStyles();
-  
+  const problems = props.problems
+
+  console.log('user problemlog: ', problems)
   
   const problemList = (wall) => {
-    let problems = props.user.problemLog.filter(problem => problem.area === wall);
-    problems.sort((a, b) => a.number - b.number);
-    problems = problems.map(problem => {
+    let list = problems.filter(problem => problem.area === wall).sort((a, b) => a.number - b.number).map(problem => {
       return <Problem problem={problem} key={problem._id} classes={classes} />
     })
         
@@ -120,7 +121,7 @@ export default props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {problems}
+            {list}
           </TableBody>
         </Table>
       </Card>
