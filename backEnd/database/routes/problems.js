@@ -37,23 +37,23 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
-  Problem.findById(req.params.id)
-    .then(problem => res.json(problem))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.route('/:id').get((req, res) => {
+//   Problem.findById(req.params.id)
+//     .then(problem => res.json(problem))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
 
-router.route('/area/:area').get((req, res) => {
+router.route('/:area').get((req, res) => {
   Problem.find({area: req.params.area.toLowerCase()})
     .then(problem => res.json(problem))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
-  Problem.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Problem deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.route('/:id').delete((req, res) => {
+//   Problem.findByIdAndDelete(req.params.id)
+//     .then(() => res.json('Problem deleted.'))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
 
 router.route('/update/:id').post((req, res) => {
   Problem.findById(req.params.id)
