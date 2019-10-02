@@ -64,17 +64,14 @@ export default props => {
     e.preventDefault();
 
     let newUser = {username: username, email: email, problemLog: []};
-    
-    if (!validUser || !validEmail || !validPassword) {
-      alert('fill out form completely')
-      
-      if (username.length < 4 || username.length > 20) {
-        setUserHelp('4 character min. 20 character max. No spaces.')
-      }
-      
-      userList[username] ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.') 
-      
+    let userExists = (username) => axios.get(`/users/${username}`).then(res => res.data !== null ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.'))
 
+    if (!validUser || !validEmail || !validPassword) {      
+      
+    (username.length < 4 || username.length > 20) ? 
+      setUserHelp('4 character min. 20 character max. No spaces.')
+      : userExists(username)
+      
       validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
 
       if (!validPassword) {
