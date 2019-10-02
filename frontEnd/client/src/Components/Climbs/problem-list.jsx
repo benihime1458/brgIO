@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'; // use to edit climbing notes and other
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardMedia, Checkbox,
   Table, TableBody, TableCell, TableHead,
-  TableRow, Typography, Divider, IconButton, Paper,
+  TableRow, Typography, Divider, IconButton, Paper, Button
 } from '@material-ui/core';
 import Add  from '@material-ui/icons/Add';
 import Remove  from '@material-ui/icons/Remove';
@@ -64,7 +64,10 @@ const Problem = props => {
             <Card>
               <Typography variant="body2" style={{backgroundColor: 'white'}}>{props.problem.number}</Typography>
               <Divider/>
-              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>{lessThan7DaysOld ? "?" : props.problem.grade}</Typography>
+              <Typography variant="subtitle2" style={{backgroundColor: 'white'}}>
+                {lessThan7DaysOld ? "?" : props.problem.grade}
+                {/* {props.problem.grade} */}
+                </Typography>
               <Divider/>
               <Typography style={{ backgroundColor: `${props.problem.color}`, height: '20px'}} ></Typography>
             </Card>
@@ -113,10 +116,17 @@ export default props => {
     })
 
     let latestSet = problems.filter(problem => problem.area === wall).reduce((a, b) => a.dateSet > b.dateSet ? a.dateSet : b.dateSet)
+    // const setDate = new Date(props.problem.dateSet);
+    // const lessThan7DaysOld = (currentDate - setDate) < 678017049
+
     
     return <>
-    <Typography align="center" variant='h4' gutterBottom>{wall.toUpperCase()}</Typography>
-    <Typography variant='caption' gutterBottom>{latestSet}</Typography>
+      <Typography align="center" variant='h4' gutterBottom>
+        {wall.toUpperCase()}
+        <Button onClick={() => console.log(wall)}>Update Set</Button>
+      </Typography>
+    
+    <Typography variant='caption' gutterBottom>{(new Date(latestSet)).toLocaleDateString()}</Typography>
       <Card className={classes.card}>
         <Table size="small">
           <TableHead>
