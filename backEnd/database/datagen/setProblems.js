@@ -10,6 +10,8 @@ const Problem = require('../models/problem.model.js');
 
 let problems; 
 
+Problem.deleteMany({}, () => console.log('all problems removed!'));
+
 csv({
   colParser: {
     "number": "number",
