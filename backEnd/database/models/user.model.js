@@ -12,7 +12,16 @@ const problemLog = new Schema({
   sends: { type: Number, required: false },
   flashed: { type: Boolean, required: false },
   project: { type: Boolean, required: false },
-  notes: { type: String, required: false }, 
+  notes: { type: String, required: false },
+}, {
+  timestamps: true,
+});
+
+const sessionLog = new Schema({
+  session: { type: Number, required: true },
+  date: { type: Date, required: true },
+  title: { type: String, required: false },
+  problemLog: [problemLog],
 }, {
   timestamps: true,
 });
@@ -28,14 +37,14 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true, 
+    unique: true,
     trim: true,
     match: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
   },
-  problemLog: [problemLog]
+  sessionLog: [sessionLog]
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
 const User = mongoose.model('User', userSchema);
 
