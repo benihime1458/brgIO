@@ -71,8 +71,6 @@ export default props => {
       }, 1500)) 
   }, [])
 
-  
-
   return (
 
     <>

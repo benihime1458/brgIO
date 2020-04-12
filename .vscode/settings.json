@@ -1,6 +1,6 @@
 {
   "zenMode.hideLineNumbers": false,
   "zenMode.hideActivityBar": false,
-  "workbench.colorTheme": "Monokai",
+  "workbench.colorTheme": "Dracula At Night",
   "editor.smoothScrolling": true
 }

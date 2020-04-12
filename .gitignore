@@ -9,3 +9,4 @@ firebase-auth.json
 backend/database/datagen
 .csv
 backEnd/database/datagen/problems.csv
+.vscode/settings.json
