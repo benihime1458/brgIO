@@ -7,6 +7,7 @@
     "start": "node backEnd/server/server.js",
     "develop": "nodemon backEnd/server/server.js",
     "build": "webpack -d --watch",
+    "production": "webpack -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benny Wu",
