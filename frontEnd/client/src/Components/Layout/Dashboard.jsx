@@ -40,13 +40,25 @@ export default props => {
   const [demoProblems, setDemoProblems] = useState([])
 
   useEffect(() => {
-    axios.get('/problems').then(res => {
-      let wut = [];
-      for (let i in res.data) {
-        wut.push(res.data[i])
-      }
-      setDemoProblems(wut)
-    })
+    // axios.get('/problems').then(res => {
+    //   let wut = [];
+    //   for (let i in res.data) {
+    //     wut.push(res.data[i])
+    //   }
+    //   setDemoProblems(wut)
+    // })
+
+    fetch('/.netlify/functions/climbRead')
+      .then(res => res.json())
+      .then(response => {
+        console.log(response.msg)
+        let wut = [];
+        for (let i in response.data) {
+          wut.push(response.data[i])
+        }
+        setDemoProblems(wut)
+      })
+      .catch(err => console.log('Error retrieving climbs: ', err))
   }, []);
 
   useEffect(() => {
