@@ -22,15 +22,15 @@ app.use((req, res, next) => {
 });
 
 // server static assets
-app.use(express.static(path.join(__dirname, '../../frontEnd/client/dist')));
+app.use(express.static(path.join(__dirname, '../../frontEnd/client/build')));
 
 // mongoose
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true});
 
 const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log('MongoDB connected!')
-})
+  console.log('MongoDB connected!');
+});
 
 // routers
 const exercisesRouter = require('../database/routes/exercises');
@@ -39,7 +39,7 @@ const climbsRouter = require('../database/routes/climbs');
 const problemsRouter = require('../database/routes/problems');
 
 // middleware from routers
-// app.use('/exercises', exercisesRouter);
+app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/climbs', climbsRouter);
 app.use('/problems', problemsRouter);

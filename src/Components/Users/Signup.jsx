@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme => ({
 
   },
   textField: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     width: '100%',
   },
 })));
@@ -45,57 +45,57 @@ export default props => {
   const changeUsername = (e) => {
     let usernameInput = e.target.value.toLowerCase().replace(/\s/g,'');
     setUsername(usernameInput);
-    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20);
-  };
+    validateUser(usernameInput.length >= 4 && usernameInput.length <= 20)
+  }
   
   const changeEmail = (e) => {
     let emailInput = e.target.value.replace(/\s/g, '');
     setEmail(emailInput);
     e.target.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ?
-    validateEmail(true) : validateEmail(false);
-  };
+    validateEmail(true) : validateEmail(false)
+  }
 
   const changePassword = (e) => {
     setPassword(e.target.value);
-    validatePassword(e.target.value.length >= 6);
-  };
+    validatePassword(e.target.value.length >= 6)
+  }
 
   const signup = e => {
     e.preventDefault();
 
     let newUser = {username: username, email: email, problemLog: []};
-    let userExists = (username) => axios.get(`/users/${username}`).then(res => res.data !== null ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.'));
+    let userExists = (username) => axios.get(`/users/${username}`).then(res => res.data !== null ? setUserHelp('Username not available. Please choose a different username.') : setUserHelp('Username available.'))
 
     if (!validUser || !validEmail || !validPassword) {      
       
     (username.length < 4 || username.length > 20) ? 
       setUserHelp('4 character min. 20 character max. No spaces.')
-      : userExists(username);
+      : userExists(username)
       
-      validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.');
+      validEmail ? setEmailHelp('Valid email.') : setEmailHelp('Invalid email. Please provide valid email address.')
 
       if (!validPassword) {
-        setPasswordHelp('6 character min. 20 character max.');
+        setPasswordHelp('6 character min. 20 character max.')
       } else {
-        setPasswordHelp('Retype password.');
-        setPassword(''); 
+        setPasswordHelp('Retype password.')
+        setPassword('') 
       }
 
     } else {
 
       axios.get(`/problems`).then(res => {
-        newUser.problemLog = res.data;
+        newUser.problemLog = res.data
 
         axios.post(`/users/add`, newUser).then(
           fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-          }).then((u) => { console.log(u); })
+          }).then((u) => { console.log(u) })
             .catch((error) => {
-              console.log(error);
-            }));
-      });
+              console.log(error)
+            }))
+      })
 
    }
-  };
+  }
 
   const classes = useStyles();
 

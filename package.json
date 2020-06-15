@@ -4,12 +4,13 @@
   "description": "bridges portfolio site",
   "main": "index.js",
   "scripts": {
-    "start": "run-p start:**",
-    "start:app": "react-scripts start",
+    "start": "node backEnd/server/server.js",
+    "develop": "nodemon backEnd/server/server.js",
+    "build": "webpack -p --watch",
+    "production": "webpack",
     "start:lambda": "netlify-lambda serve frontEnd/client/src/lambda",
-    "build": "run-p build:**",
-    "build:app": "react-scripts build",
-    "build:lambda": "netlify-lambda build frontEnd/client/src/lambda"
+    "build:lambda": "netlify-lambda build frontEnd/client/src/lambda",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benny Wu",
   "license": "ISC",

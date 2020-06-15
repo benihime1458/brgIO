@@ -40,29 +40,17 @@ export default props => {
   const [demoProblems, setDemoProblems] = useState([])
 
   useEffect(() => {
-    // axios.get('/problems').then(res => {
-    //   let wut = [];
-    //   for (let i in res.data) {
-    //     wut.push(res.data[i])
-    //   }
-    //   setDemoProblems(wut)
-    // })
-
-    fetch('/.netlify/functions/climbRead')
-      .then(res => res.json())
-      .then(response => {
-        console.log(response.msg)
-        let wut = [];
-        for (let i in response.data) {
-          wut.push(response.data[i])
-        }
-        setDemoProblems(wut)
-      })
-      .catch(err => console.log('Error retrieving climbs: ', err))
+    axios.get('/problems').then(res => {
+      let wut = [];
+      for (let i in res.data) {
+        wut.push(res.data[i])
+      }
+      setDemoProblems(wut)
+    })
   }, []);
 
   useEffect(() => {
-    axios.get(`/users/`).then(res => {
+    axios.get(`/users`).then(res => {
       for (let i in res.data) {
 
         let currentUser = { username: res.data[i].username, email: res.data[i].email }
@@ -75,51 +63,53 @@ export default props => {
   }, [])
 
   useEffect(() => {
-    props.user || demo ? setLoading(true) 
-    : (
-      setLoading(true), 
-      setTimeout(() => {
-        setLoading(false)
-      }, 1500)) 
+    props.user || demo ? setLoading(true)
+      : (
+        setLoading(true),
+        setTimeout(() => {
+          setLoading(false)
+        }, 1500))
   }, [])
+
+
 
   return (
 
     <>
-    <Navbar user={props.user} demo={demo} setDemo={setDemo} />
-    <div className={classes.root} >
-      <div className={classes.content}>
-        <Paper className={classes.paper}>
-          { !props.user && !demo ? 
-            <>
-              <Typography variant="h1" align="center" gutterBottom>brg.io</Typography>
-              <Tabs
-                value={index}
-                indicatorColor='primary'
-                textColor='primary'
-                variant="fullWidth"
-                centered
-              >
-                <Tab label='Login' onClick={() => setIndex(0)} />
-                <Tab label='Sign Up' onClick={() => setIndex(1)} />
-              </Tabs>
-                {index == 0 ? <Login setDemo={setDemo}/> : <Signup userList={userList}/>}
-              <Typography paragraph >
-                Welcome to brg.io! My name is Benny and I love bouldering. This web app is for quickly logging your bouldering session at Brides Rock Gym, my home gym. More features will be added as I continue to work on this project. =]
+      <Navbar user={props.user} demo={demo} setDemo={setDemo} />
+      <div className={classes.root} >
+        <div className={classes.content}>
+          <Paper className={classes.paper}>
+            {!props.user && !demo ?
+              <>
+                <Typography variant="h1" align="center" gutterBottom>brg.io</Typography>
+                <Tabs
+                  value={index}
+                  indicatorColor='primary'
+                  textColor='primary'
+                  variant="fullWidth"
+                  centered
+                >
+                  <Tab label='Login' onClick={() => setIndex(0)} />
+                  <Tab label='Sign Up' onClick={() => setIndex(1)} />
+                </Tabs>
+                {index == 0 ? <Login setDemo={setDemo} /> : <Signup userList={userList} />}
+                <Typography paragraph >
+                  Welcome to brg.io! My name is Benny and I love bouldering. This web app is for quickly logging your bouldering session at Brides Rock Gym, my home gym. More features will be added as I continue to work on this project. =]
               </Typography>
-            </>
-            :
-            <>
-            {   loading ? <LinearProgress />
-                :
-                props.user ? <Route path="/" exact render={() => <ProblemList problems={props.user.problemLog}/>}/> : 
-                demo ? <Route path="/" exact render={() => <ProblemList problems={demoProblems}/>}/> : null
-            }  
-            </>
-          }
-        </Paper>
+              </>
+              :
+              <>
+                {loading ? <LinearProgress />
+                  :
+                  props.user ? <Route path="/" exact render={() => <ProblemList problems={props.user.problemLog} />} /> :
+                    demo ? <Route path="/" exact render={() => <ProblemList problems={demoProblems} />} /> : null
+                }
+              </>
+            }
+          </Paper>
+        </div>
       </div>
-    </div>
     </>
   );
 }
